@@ -25,7 +25,8 @@
 		"react-icons": "^3.11.0",
 		"react-reactions": "github:randomdipesh/react-reactions",
 		"react-router-dom": "^5.2.0",
-		"react-scripts": "^3.4.4"
+		"react-scripts": "^3.4.4",
+		"react-google-login":"5.2.2"
 	},
 	"scripts": {
 		"start": "react-scripts start",
