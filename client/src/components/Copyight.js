@@ -7,7 +7,7 @@ const Copyright = () => {
 	return (
 		<Typography variant="body2" color="textSecondary" align="center">
 			{"Copyright © "}
-			<Link to="/">InstaClone</Link> {new Date().getFullYear()}
+			<Link to="/">DevVersion</Link> {new Date().getFullYear()}
 			{"."}
 		</Typography>
 	);

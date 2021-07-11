@@ -5,7 +5,7 @@ var cors = require("cors");
 
 const app = express();
 const PORT = 3000;
-const URL = "mongodb://localhost:27017/instadb";
+const URL = "mongodb://localhost:3000/devVersionDB";
 
 mongoose.connect(URL, {
 	useNewUrlParser: true,
@@ -14,10 +14,10 @@ mongoose.connect(URL, {
 });
 
 mongoose.connection.on("connected", () => {
-	console.log("Successfully connected to InstaDB");
+	console.log("Successfully connected to DevVersionDB");
 });
 mongoose.connection.on("error", (err) => {
-	console.log("error while connecting to InstaDB : ", err);
+	console.log("error while connecting to DevVersionDB : ", err);
 });
 
 require("./models/user");

@@ -17,6 +17,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
+import { GoogleLogin } from 'react-google-login';
 
 // General Styles
 const useStyles = makeStyles((theme) => ({
@@ -32,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
 	},
 	image: {
 		backgroundSize: "cover",
-		backgroundColor: "#fafafa",
+		backgroundColor: "499DCD",
 		backgroundImage: "url(https://source.unsplash.com/random)",
 		backgroundRepeat: "no-repeat",
 		backgroundPosition: "center",
 	},
 	form: {
-		width: "100%", // Fix IE 11 issue.
+		width: "100%", 
 		marginTop: theme.spacing(1),
 	},
 	submit: {
@@ -58,7 +59,7 @@ const Login = () => {
 	const [authValidation, setAuthValidation] = useState(false);
 
 	const PostData = () => {
-		// the Regex email validation was token from : https://emailregex.com/
+		// the Regex email validation was taken from : https://emailregex.com/
 		if (
 			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
 				email

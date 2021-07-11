@@ -105,7 +105,7 @@ const Signup = () => {
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<Typography className={classes.Logo} variant="h2">
-				Instagram Clone
+				DevVersion
 			</Typography>
 			{/*  Check the format of the Email */}
 			{formatValidation ? (
