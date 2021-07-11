@@ -1,23 +1,22 @@
-
 const express = require("express");
 const mongoose = require("mongoose");
 var cors = require("cors");
 
 const app = express();
-const PORT = 3000;
-const URL = "mongodb://localhost:3000/devVersionDB";
+const PORT = process.env.PORT || 3001;
+const URL = "mongodb://localhost/DevVersionDB";
 
-mongoose.connect(URL, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-	useFindAndModify: false,
+mongoose.connect(process.env.MONGODB_URI || URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
 });
 
 mongoose.connection.on("connected", () => {
-	console.log("Successfully connected to DevVersionDB");
+  console.log("Successfully connected to DevVersionDB");
 });
 mongoose.connection.on("error", (err) => {
-	console.log("error while connecting to DevVersionDB : ", err);
+  console.log("error while connecting to DevVersionDB : ", err);
 });
 
 require("./models/user");
@@ -31,5 +30,5 @@ app.use(require("./routes/post"));
 app.use(require("./routes/user"));
 
 app.listen(PORT, () => {
-	console.log("Server is running under port 3000 ...");
+  console.log("Server is running under port 3000 ...");
 });
