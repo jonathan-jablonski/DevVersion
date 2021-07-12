@@ -12,12 +12,13 @@
 ---
 
 ## Summary 
- > Featuring the Shack Me Button, Pod Shack enable users to view and follow links to suggested Pod Casts. With the Shack Me button it allows user to get a random suggestion. 
+ > 
 ---
 
 ## Technologies
 > <b>Design Tools:</b>
-  * Keynot
+> * Figma
+  * Keynote
   * Adobe Photoshop
   
 > <b>Development Tools:</b>
