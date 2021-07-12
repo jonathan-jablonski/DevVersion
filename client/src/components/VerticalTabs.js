@@ -83,7 +83,7 @@ export default function VerticalTabs() {
 				<Tab label="Email ans SMS" {...a11yProps(3)} />
 				<Tab label="Push Notifications" {...a11yProps(4)} />
 				<Tab label="Privacy and Security" {...a11yProps(5)} />
-				<Tab label="Email From Insta-Clone" {...a11yProps(6)} />
+				<Tab label="Email From DevVersion" {...a11yProps(6)} />
 			</Tabs>
 			<TabPanel value={value} index={0} style={{ width: "100%" }}>
 				<form noValidate autoComplete="off">
@@ -132,6 +132,18 @@ export default function VerticalTabs() {
 					<div className={classes.fieldContainer}>
 						<Typography variant="caption" gutterBottom className={classes.fieldLabel}>
 							Phone Number
+						</Typography>
+						<TextField id="outlined-basic" variant="outlined" className={classes.fieldInput} />
+					</div>
+					<div className={classes.fieldContainerUnderInfo}>
+						<Typography variant="caption" gutterBottom className={classes.fieldLabel}>
+							GitHub
+						</Typography>
+						<TextField id="outlined-basic" variant="outlined" className={classes.fieldInput} />
+					</div>
+					<div className={classes.fieldContainerUnderInfo}>
+						<Typography variant="caption" gutterBottom className={classes.fieldLabel}>
+							Skills
 						</Typography>
 						<TextField id="outlined-basic" variant="outlined" className={classes.fieldInput} />
 					</div>
