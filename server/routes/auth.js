@@ -41,10 +41,10 @@ router.post("/signup", (req, res) => {
 					.then((user) => {
 						// after saving the user into DB we send a confirmation email
 						const email = {
-							from: "no-reply@insta-clone.com",
+							from: "no-reply@devversion.com",
 							to: user.Email,
 							subject: "Your account has been created successfully",
-							html: "<h1>Welcome to InstaClone</h1>",
+							html: "<h1>Welcome to DevVersion</h1>",
 						};
 						sgMail.send(email);
 						res.json({ message: "Saved successfully " });
@@ -111,7 +111,7 @@ router.post("/reset-pwd", (req, res) => {
 				// the following is an example of Email template
 
 				const email = {
-					from: "no-reply@insta-clone.com",
+					from: "no-reply@devversion.com",
 					to: user.Email,
 					subject: "Password Reset",
 					html: `
