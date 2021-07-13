@@ -1,4 +1,3 @@
-
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../App";
@@ -17,83 +16,84 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
+import { GoogleLogin } from "react-google-login";
 
 const clientId =
   '707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com';
-
 // General Styles
 const useStyles = makeStyles((theme) => ({
-	Logo: {
-		fontFamily: "Grand Hotel, cursive",
-		margin: "40px 0px",
-	},
-	paper: {
 		marginTop: "50px",
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
+  Logo: {
+    fontFamily: "Grand Hotel, cursive",
+    margin: "40px 0px",
+  },
+  paper: {
+    marginTop: "50px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  image: {
+    backgroundSize: "cover",
     backgroundColor: "499DCD",
-	},
-	image: {
-		backgroundSize: "cover",
-		backgroundColor: "499DCD",
-		backgroundImage: "url(https://source.unsplash.com/random)",
-		backgroundRepeat: "no-repeat",
-		backgroundPosition: "center",
-	},
-	form: {
-		width: "100%", 
-		marginTop: theme.spacing(1),
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-	},
+    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 const Login = () => {
-	const { dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
 
-	const history = useHistory();
-	const classes = useStyles();
+  const history = useHistory();
+  const classes = useStyles();
 
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [formatValidation, setFormatValidation] = useState(false);
-	const [authValidation, setAuthValidation] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [formatValidation, setFormatValidation] = useState(false);
+  const [authValidation, setAuthValidation] = useState(false);
 
-	const PostData = () => {
-		// the Regex email validation was taken from : https://emailregex.com/
-		if (
-			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-				email
-			)
-		) {
-			axios.post(LOGIN_URL, { password, email })
-				.then((res) => {
-					const data = res.data;
-					if (data.error) {
-						setFormatValidation(false);
-						setAuthValidation(true);
-					} else {
-						// we store our generated token in order to use it to access protected endpoints
-						localStorage.setItem("jwt", data.token);
-						// we also store the user details
-						localStorage.setItem("user", JSON.stringify(data.user));
-						dispatch({ type: "USER", payload: data.user });
-						//we can show that success PopUp or not depends on dev choice
-						//
-						// we redirect the user to home page
-						history.push("/");
-					}
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		} else {
-			setAuthValidation(false);
-			setFormatValidation(true);
-		}
-	};
+  const PostData = () => {
+    // the Regex email validation was taken from : https://emailregex.com/
+    if (
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email
+      )
+    ) {
+      axios
+        .post(LOGIN_URL, { password, email })
+        .then((res) => {
+          const data = res.data;
+          if (data.error) {
+            setFormatValidation(false);
+            setAuthValidation(true);
+          } else {
+            // we store our generated token in order to use it to access protected endpoints
+            localStorage.setItem("jwt", data.token);
+            // we also store the user details
+            localStorage.setItem("user", JSON.stringify(data.user));
+            dispatch({ type: "USER", payload: data.user });
+            //we can show that success PopUp or not depends on dev choice
+            //
+            // we redirect the user to home page
+            history.push("/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setAuthValidation(false);
+      setFormatValidation(true);
+    }
+  };
 
   return (
     <Grid container>

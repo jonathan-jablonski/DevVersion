@@ -128,7 +128,7 @@ const Home = () => {
 	}, []);
 
 	const likePost = (id) => {
-		axios.put(`http://localhost:5000/like`, { postId: id }, config)
+		axios.put(`/like`, { postId: id }, config)
 			.then((result) => {
 				const newData = data.map((item) => {
 					if (result.data._id === item._id) return result.data;
@@ -140,7 +140,7 @@ const Home = () => {
 	};
 
 	const UnlikePost = (id) => {
-		axios.put(`http://localhost:5000/Unlike`, { postId: id }, config)
+		axios.put(`/Unlike`, { postId: id }, config)
 			.then((res) => {
 				const newData = data.map((item) => {
 					if (res.data._id === item._id) return res.data;
@@ -152,7 +152,7 @@ const Home = () => {
 	};
 
 	const bookmark = (id) => {
-		axios.put(`http://localhost:5000/bookmark-post`, { postId: id }, config)
+		axios.put(`/bookmark-post`, { postId: id }, config)
 			.then((result) => {
 				dispatch({
 					type: "BOOKMARK",
@@ -164,7 +164,7 @@ const Home = () => {
 	};
 
 	const removeBookmark = (id) => {
-		axios.put(`http://localhost:5000/remove-bookmark`, { postId: id }, config)
+		axios.put(`/remove-bookmark`, { postId: id }, config)
 			.then((result) => {
 				dispatch({
 					type: "BOOKMARK",
@@ -177,7 +177,7 @@ const Home = () => {
 
 	const makeComment = (text, postId) => {
 		setComment("");
-		axios.put(`http://localhost:5000/comment`, { text, postId }, config)
+		axios.put(`/comment`, { text, postId }, config)
 			.then((result) => {
 				const newData = data.map((item) => {
 					if (result.data._id === item._id) return result.data;
@@ -190,7 +190,7 @@ const Home = () => {
 	};
 
 	const deletePost = (postId) => {
-		axios.delete(`http://localhost:5000/deletepost/${postId}`, config).then((res) => {
+		axios.delete(`/deletepost/${postId}`, config).then((res) => {
 			const newData = data.filter((item) => {
 				return item._id !== res.data;
 			});
@@ -220,7 +220,7 @@ const Home = () => {
 							{item.PostedBy.Name}
 						</Link>
 					}
-					subheader="September 14, 2020"
+					subheader="July 14, 2021"
 				/>
 
 				<CardMedia
