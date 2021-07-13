@@ -1,4 +1,3 @@
-
 import React, { useEffect, createContext, useReducer, useContext } from "react";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { reducer, initialState } from "./reducers/userReducer";
@@ -72,14 +71,14 @@ const Routing = () => {
 };
 
 function App() {
-	const [state, dispatch] = useReducer(reducer, initialState);
-	return (
-		<UserContext.Provider value={{ state, dispatch }}>
-			<BrowserRouter>
-				<Routing />
-			</BrowserRouter>
-		</UserContext.Provider>
-	);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <UserContext.Provider value={{ state, dispatch }}>
+      <BrowserRouter>
+        <Routing />
+      </BrowserRouter>
+    </UserContext.Provider>
+  );
 }
 
 export default App;

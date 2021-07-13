@@ -22,7 +22,9 @@ const clientId =
   '707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com';
 // General Styles
 const useStyles = makeStyles((theme) => ({
+
 		marginTop: "50px",
+
   Logo: {
     fontFamily: "Grand Hotel, cursive",
     margin: "40px 0px",
@@ -167,7 +169,6 @@ const Login = () => {
               >
                 Sign In
               </Button>
-              
               <Button
                 fullWidth
                 variant="contained"
@@ -178,6 +179,7 @@ const Login = () => {
               >
               <Link to="/GoogleLogin"> Log In With Google</Link>
               </Button>
+
               <Grid container>
                 <Grid item xs>
                   <Link to="/reset">Forgot password?</Link>
