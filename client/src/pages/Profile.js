@@ -106,6 +106,7 @@ const ProfilePage = () => {
 
 	useEffect(() => {
 		axios.get(MY_POST_URL, config).then((res) => {
+			console.log("data",data );
 			setData(res.data.posts);
 		});
 		axios.get(MY_BOOKMARKS_URL, config).then((res) => {

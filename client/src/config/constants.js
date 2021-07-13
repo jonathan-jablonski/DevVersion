@@ -26,17 +26,17 @@ export const ALL_POST_URL = `http://localhost:3000/allpost`;
 export const LOGIN_URL = `http://localhost:3000/signin`;
 
 // NewPassword Screen
-export const NEW_PWD_URL = `http://localhost:3000/new-pwd`;
+export const NEW_PWD_URL = `http://localhost:3000/newpassword`;
 
 // Profile Screen
 export const MY_POST_URL = `http://localhost:3000/mypost`;
 export const MY_BOOKMARKS_URL = `http://localhost:3000/bookmarks`;
 
 // ResetPassword Screen
-export const RESET_PWD_URL = `http://localhost:3000/reset-pwd`;
+export const RESET_PWD_URL = `http://localhost:3000/resetpassword`;
 
 // SignUp Screen
 export const SIGNUP_URL = `http://localhost:3000/signup`;
 
 // SubscribePosts Screen
-export const SUB_POST_URL = `http://localhost:3000/subspost`;
+export const SUB_POST_URL = `http://localhost:3000/subscribeposts`;

@@ -1,23 +1,13 @@
 {
-  "name": "instagram-web-app-mern-stack-clone",
+  "name": "devversion",
   "version": "1.0.0",
-  "description": "Building an Instagram web app clone using MERN Stack ( MongoDB , Express.js , React.js , Node.js ) and bring some additional features",
+  "description": "Using MERN Stack ( MongoDB , Express.js , React.js , Node.js ) for Deveolpers to meet",
   "main": "app.js",
   "scripts": {
     "start": "node app",
     "dev": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TheLordA/Instagram-Web-App-MERN-Stack-Clone.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/TheLordA/Instagram-Web-App-MERN-Stack-Clone/issues"
-  },
-  "homepage": "https://github.com/TheLordA/Instagram-Web-App-MERN-Stack-Clone#readme",
   "dependencies": {
     "@sendgrid/mail": "^7.2.5",
     "bcryptjs": "^2.4.3",

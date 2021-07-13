@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { reducer, initialState } from "./reducers/userReducer";
 import NavBar from "./components/Navbar";
 import Home from "./pages/Home";
+import GoogleLogin from "./pages/GoogleLogin";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost.js";
@@ -52,6 +53,9 @@ const Routing = () => {
       </Route>
       <Route path="/login">
         <Login />
+      </Route>
+      <Route path="/googlelogin">
+        <GoogleLogin />
       </Route>
       <Route path="/signup">
         <Signup />
