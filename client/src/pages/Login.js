@@ -17,7 +17,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
-import { GoogleLogin } from 'react-google-login';
+
+const clientId =
+  '707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com';
 
 // General Styles
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
+    backgroundColor: "499DCD",
 	},
 	image: {
 		backgroundSize: "cover",
@@ -92,91 +95,106 @@ const Login = () => {
 		}
 	};
 
-	return (
-		<Grid container>
-			<Grid className={classes.image} item sm={4} md={6} />
-			<Grid item xs={12} sm={8} md={6}>
-				<Container component="main" maxWidth="xs" style={{ paddingBottom: "64px" }}>
-					<CssBaseline />
-					<div className={classes.paper}>
-						<Typography
-							className={classes.Logo}
-							variant="h2"
-							gutterBottom
-							style={{ fontFamily: "Grand Hotel, cursive " }}
-						>
-							Instagram Clone
-						</Typography>
-						{formatValidation ? (
-							<Alert variant="outlined" severity="error">
-								Invalid Email format — check it out!
-							</Alert>
-						) : null}
-						{authValidation ? (
-							<Alert variant="outlined" severity="error">
-								Invalid given Email/Password — check it out!
-							</Alert>
-						) : null}
-						<form className={classes.form} noValidate>
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								id="email"
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								autoFocus
-								value={email}
-								onChange={(e) => {
-									setEmail(e.target.value);
-								}}
-							/>
-							<TextField
-								variant="outlined"
-								margin="normal"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"
-								autoComplete="current-password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-							<FormControlLabel
-								control={<Checkbox value="remember" color="primary" />}
-								label="Remember me"
-							/>
-							<Button
-								fullWidth
-								variant="contained"
-								color="primary"
-								className={classes.submit}
-								disabled={email !== "" && password !== "" ? false : true}
-								onClick={() => PostData()}
-							>
-								Sign In
-							</Button>
-							<Grid container>
-								<Grid item xs>
-									<Link to="/reset">Forgot password?</Link>
-								</Grid>
-								<Grid item>
-									<Link to="/signup">{"Don't have an account? Sign Up"}</Link>
-								</Grid>
-							</Grid>
-						</form>
-					</div>
-					<Box mt={8}>
-						<Copyright />
-					</Box>
-				</Container>
-			</Grid>
-		</Grid>
-	);
+  return (
+    <Grid container>
+      <Grid className={classes.image} item sm={4} md={6} />
+      <Grid item xs={12} sm={8} md={6}>
+        <Container
+          component="main"
+          maxWidth="xs"
+          style={{ paddingBottom: "64px" }}
+        >
+          <CssBaseline />
+          <div className={classes.paper}>
+            <Typography
+              className={classes.Logo}
+              variant="h2"
+              gutterBottom
+              style={{ fontFamily: "Grand Hotel, cursive " }}
+            >
+              DevVersion
+            </Typography>
+            {formatValidation ? (
+              <Alert variant="outlined" severity="error">
+                Invalid Email format — check it out!
+              </Alert>
+            ) : null}
+            {authValidation ? (
+              <Alert variant="outlined" severity="error">
+                Invalid given Email/Password — check it out!
+              </Alert>
+            ) : null}
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={email !== "" && password !== "" ? false : true}
+                onClick={() => PostData()}
+              >
+                Sign In
+              </Button>
+              
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                disabled={email !== "" && password !== "" ? false : true}
+                onClick={() => PostData()}
+              >
+              <Link to="/GoogleLogin"> Log In With Google</Link>
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link to="/reset">Forgot password?</Link>
+                </Grid>
+                <Grid item>
+                  <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
+                </Grid>
+              </Grid>
+            </form>
+          </div>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </Container>
+      </Grid>
+    </Grid>
+  );
 };
 
 export default Login;
