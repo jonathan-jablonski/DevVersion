@@ -30,5 +30,5 @@ app.use(require("./routes/post"));
 app.use(require("./routes/user"));
 
 app.listen(PORT, () => {
-  console.log("Server is running under port 3000 ...");
+  console.log("Server is running under port 3001 ...");
 });
