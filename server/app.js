@@ -29,6 +29,12 @@ app.use(require("./routes/auth"));
 app.use(require("./routes/post"));
 app.use(require("./routes/user"));
 
+// tells if application is on heroku
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
 app.listen(PORT, () => {
   console.log("Server is running under port 3001 ...");
 });
