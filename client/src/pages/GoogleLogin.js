@@ -5,7 +5,7 @@ import { GoogleLogin } from 'react-google-login';
 //import { refreshTokenSetup } from '../utils/refreshToken';
 
 const clientId =
-  '707788443358-u05p46nssla3l8tmn58tpo9r5sommgks.apps.googleusercontent.com';
+  '746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com';
 
 function Login() {
   const onSuccess = (res) => {
@@ -19,7 +19,7 @@ function Login() {
   const onFailure = (res) => {
     console.log('Login failed: res:', res);
     alert(
-      `Failed to login. 😢 Please ping this to repo owner twitter.com/sivanesh_fiz`
+      `Failed to login. 😢 `
     );
   };
 
