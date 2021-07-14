@@ -178,12 +178,6 @@ const Login = () => {
                 onClick={() => PostData()}
               >
               <Link to="/GoogleLogin"> Log In With Google</Link>
-              fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disabled={email !== "" && password !== "" ? false : true}
-                onClick={() => PostData()}
               </Button>
 
               <Grid container>
