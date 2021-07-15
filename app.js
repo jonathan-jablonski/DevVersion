@@ -5,6 +5,7 @@ var cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3001;
 const URL = "mongodb://localhost/DevVersionDB";
+const morgan = require("morgan");
 
 mongoose.connect(process.env.MONGODB_URI || URL, {
   useNewUrlParser: true,
@@ -29,8 +30,9 @@ app.use(require("./server/routes/auth"));
 app.use(require("./server/routes/post"));
 app.use(require("./server/routes/user"));
 
-// tells if application is on heroku
+app.use(morgan());
 
+// tells if application is on heroku
 app.use(express.static("client/build"));
 
 app.listen(PORT, () => {

@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
@@ -20,180 +18,181 @@ import Alert from "@material-ui/lab/Alert";
 
 // General Styles
 const useStyles = makeStyles((theme) => ({
-	Logo: {
-		fontFamily: "Grand Hotel, cursive",
-		marginBottom: "42px",
-		width: "fit-content",
-		margin: "0px auto",
-		marginTop: "40px",
-	},
-	paper: {
-		marginTop: "10px",
-		display: "flex",
-		flexDirection: "column",
-		alignItems: "center",
-	},
-	avatar: {
-		margin: theme.spacing(1),
-		backgroundColor: theme.palette.secondary.main,
-	},
-	form: {
-		width: "100%", // Fix IE 11 issue.
-		marginTop: theme.spacing(3),
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-	},
+  Logo: {
+    fontFamily: "Grand Hotel, cursive",
+    marginBottom: "42px",
+    width: "fit-content",
+    margin: "0px auto",
+    marginTop: "40px",
+  },
+  paper: {
+    marginTop: "10px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 const Signup = () => {
-	const history = useHistory();
-	const classes = useStyles();
-	const [name, setName] = useState("");
-	const [password, setPassword] = useState("");
-	const [email, setEmail] = useState("");
-	const [formatValidation, setFormatValidation] = useState(false);
-	const [authValidation, setAuthValidation] = useState(false);
-	const [confirmValidation, setConfirmValidation] = useState(false);
+  const history = useHistory();
+  const classes = useStyles();
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [formatValidation, setFormatValidation] = useState(false);
+  const [authValidation, setAuthValidation] = useState(false);
+  const [confirmValidation, setConfirmValidation] = useState(false);
 
-	const timerRef = useRef();
+  const timerRef = useRef();
 
-	useEffect(
-		() => () => {
-			clearTimeout(timerRef.current);
-		},
-		[]
-	);
+  useEffect(
+    () => () => {
+      clearTimeout(timerRef.current);
+    },
+    []
+  );
 
-	const PostData = () => {
-		// the Regex email validation was token from : https://emailregex.com/
-		// Here we check just if the given email has a correct format
-		if (
-			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-				email
-			)
-		) {
-			axios.post(SIGNUP_URL, {
-				name,
-				password,
-				email,
-			})
-				.then((res) => {
-					const data = res.data;
-					console.log(data);
-					if (data.error) {
-						setFormatValidation(false);
-						setAuthValidation(true);
-					} else {
-						// show the confirmation message
-						setConfirmValidation(true);
-						// set a time before we redirect the user to login page
-						timerRef.current = setTimeout(() => {
-							history.push("/login");
-						}, 3000);
-					}
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		} else {
-			setAuthValidation(false);
-			setFormatValidation(true);
-		}
-	};
-	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<Typography className={classes.Logo} variant="h2">
-				DevVersion
-			</Typography>
-			{/*  Check the format of the Email */}
-			{formatValidation ? (
-				<Alert variant="outlined" severity="error">
-					Invalid Email format — check it out!
-				</Alert>
-			) : null}
-			{/*  Check the if the Email already Exist */}
-			{authValidation ? (
-				<Alert variant="outlined" severity="error">
-					This Email is already token — check it out!
-				</Alert>
-			) : null}
-			{/* Success notification */}
-			{confirmValidation ? (
-				<Alert variant="outlined" severity="success">
-					Your account has been created successfully — check it out!
-				</Alert>
-			) : null}
-			<div className={classes.paper}>
-				<form className={classes.form} noValidate>
-					<Grid container spacing={2}>
-						<Grid item xs={12}>
-							<TextField
-								autoComplete="UserName"
-								name="UserName"
-								variant="outlined"
-								required
-								fullWidth
-								label="UserName"
-								autoFocus
-								value={name}
-								onChange={(e) => setName(e.target.value)}
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								label="Email Address"
-								name="email"
-								autoComplete="email"
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								autoComplete="current-password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<FormControlLabel
-								control={<Checkbox value="allowExtraEmails" color="primary" />}
-								label="I want to receive DevVersions via email."
-							/>
-						</Grid>
-					</Grid>
-					<Button
-						fullWidth
-						variant="contained"
-						color="primary"
-						className={classes.submit}
-						onClick={() => PostData()}
-					>
-						Sign Up
-					</Button>
-					<Grid container justify="flex-end">
-						<Grid item>
-							<Link to="/login">Already have an account? Sign in</Link>
-						</Grid>
-					</Grid>
-				</form>
-			</div>
-			<Box mt={5}>
-				<Copyright />
-			</Box>
-		</Container>
-	);
+  const PostData = () => {
+    // the Regex email validation was token from : https://emailregex.com/
+    // Here we check just if the given email has a correct format
+    if (
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        email
+      )
+    ) {
+      axios
+        .post(SIGNUP_URL, {
+          name,
+          password,
+          email,
+        })
+        .then((res) => {
+          const data = res.data;
+          console.log(data);
+          if (data.error) {
+            setFormatValidation(false);
+            setAuthValidation(true);
+          } else {
+            // show the confirmation message
+            setConfirmValidation(true);
+            // set a time before we redirect the user to login page
+            timerRef.current = setTimeout(() => {
+              history.push("/login");
+            }, 3000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setAuthValidation(false);
+      setFormatValidation(true);
+    }
+  };
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Typography className={classes.Logo} variant="h2">
+        DevVersion
+      </Typography>
+      {/*  Check the format of the Email */}
+      {formatValidation ? (
+        <Alert variant="outlined" severity="error">
+          Invalid Email format — check it out!
+        </Alert>
+      ) : null}
+      {/*  Check the if the Email already Exist */}
+      {authValidation ? (
+        <Alert variant="outlined" severity="error">
+          This Email is already token — check it out!
+        </Alert>
+      ) : null}
+      {/* Success notification */}
+      {confirmValidation ? (
+        <Alert variant="outlined" severity="success">
+          Your account has been created successfully — check it out!
+        </Alert>
+      ) : null}
+      <div className={classes.paper}>
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="UserName"
+                name="UserName"
+                variant="outlined"
+                required
+                fullWidth
+                label="UserName"
+                autoFocus
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="I want to receive DevVersions via email."
+              />
+            </Grid>
+          </Grid>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={() => PostData()}
+          >
+            Sign Up
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link to="/login">Already have an account? Sign in</Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
 };
 
 export default Signup;

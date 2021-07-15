@@ -19,11 +19,10 @@ import Alert from "@material-ui/lab/Alert";
 import { GoogleLogin } from "react-google-login";
 
 const clientId =
-  '746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com';
+  "746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com";
 // General Styles
 const useStyles = makeStyles((theme) => ({
-
-		marginTop: "50px",
+  marginTop: "50px",
 
   Logo: {
     fontFamily: "Grand Hotel, cursive",
@@ -177,7 +176,7 @@ const Login = () => {
                 disabled={email !== "" && password !== "" ? false : true}
                 onClick={() => PostData()}
               >
-              <Link to="/GoogleLogin"> Log In With Google</Link>
+                <Link to="/GoogleLogin"> Log In With Google</Link>
               </Button>
 
               <Grid container>
