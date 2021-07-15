@@ -60,19 +60,32 @@ router.post("/signup", (req, res) => {
 
 // Route to handle SignIn requests
 router.post("/signin", (req, res) => {
+  console.log("SIGNIN");
   const { email, password } = req.body;
   // Verification for an empty field
   if (!email || !password) {
     return res.json({ error: "Please provide Email or Password" });
   }
   // Check if email exist in our DB
+  console.log("sign in!");
+  console.log("USER?", User);
+  console.log("FINDONE", User.findOne);
+  // User.findOne({}).then((user) => console.log("USER FROM DATABASE", user));
+
   User.findOne({ Email: email })
     .then((savedUser) => {
       if (!savedUser) {
+        console.log("NO USER");
         return res.json({ error: "Invalid Email or Password" });
       }
+      // REMOVE
+      else {
+        console.log("NO SAVED USER");
+      }
       bcrypt.compare(password, savedUser.Password).then((doMatch) => {
+        console.log("COMPARE");
         if (doMatch) {
+          console.log("DO MATCH");
           // we will generate the token based on the ID of user
           const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
           // retrieve the user info details and send it to the front
@@ -83,13 +96,16 @@ router.post("/signin", (req, res) => {
             user: { _id, Name, Email, Followers, Following, Bookmarks },
           });
         } else {
+          console.log("INVALID EMAIL/PASSWORD");
           return res.json({
             error: "Invalid Email or Password",
           });
         }
+        console.log("END OF COMPARE");
       });
     })
     .catch((err) => {
+      console.log("CAUGHT ERROR!");
       console.log(err);
     });
 });
