@@ -4,6 +4,7 @@
   "description": "![Screenshot](assets/images/hero.png?raw=true )",
   "main": "index.js",
   "scripts": {
+    "start": "cd client && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd client && npm run build",
     "install-client": "cd client && npm install",

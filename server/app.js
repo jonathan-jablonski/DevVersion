@@ -36,5 +36,5 @@ if (process.env.NODE_ENV === "production") {
 }
 
 app.listen(PORT, () => {
-  console.log("Server is running under port 3001 ...");
+  console.log(`Server is running under port ${PORT} ...`);
 });
