@@ -4,11 +4,13 @@
   "description": "Using MERN Stack ( MongoDB , Express.js , React.js , Node.js ) for Deveolpers to meet",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "npm install && npm run build"
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.2.5",
@@ -19,6 +21,7 @@
     "mongoose": "^5.10.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "concurrently": "^6.2.0"
   }
 }
