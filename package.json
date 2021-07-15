@@ -1,23 +1,24 @@
 {
-  "name": "project3",
+  "name": "devversion",
   "version": "1.0.0",
-  "description": "![Screenshot](assets/images/hero.png?raw=true )",
-  "main": "index.js",
+  "description": "Using MERN Stack ( MongoDB , Express.js , React.js , Node.js ) for Deveolpers to meet",
+  "main": "app.js",
   "scripts": {
-    "start": "cd client && npm run build",
+    "start": "node app",
+    "dev": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd client && npm run build",
-    "install-client": "cd client && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build"
+    "heroku-postbuild": "npm install && npm run build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jonathan-jablonski/DevVersion.git"
+  "dependencies": {
+    "@sendgrid/mail": "^7.2.5",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.2"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jonathan-jablonski/DevVersion/issues"
-  },
-  "homepage": "https://github.com/jonathan-jablonski/DevVersion#readme"
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
