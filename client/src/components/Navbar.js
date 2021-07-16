@@ -209,7 +209,7 @@ const Navbar = (props) => {
         </IconButton>
         <p>Add Post</p>
       </MenuItem>
-      <MenuItem component={Link} to="#">
+      <MenuItem component={Link} to="/messages">
         <IconButton>
           <Badge
             badgeContent={4}
@@ -222,18 +222,6 @@ const Navbar = (props) => {
           </Badge>
         </IconButton>
         <p>Messages</p>
-      </MenuItem>
-      <MenuItem component={Link} to="#">
-        <IconButton>
-          <Badge badgeContent={6} color="secondary">
-            <NotificationsActiveOutlinedIcon
-              style={{
-                color: "rgba(0, 0, 0, 0.54)",
-              }}
-            />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
       </MenuItem>
       <MenuItem component={Link} to="/profile">
         <IconButton>
@@ -397,27 +385,13 @@ const Navbar = (props) => {
                   style={{ color: "rgba(0, 0, 0, 0.54)" }}
                   icon={
                     <Badge
-                      badgeContent={4}
+                      badgeContent={0}
                       color="secondary"
                       style={{
                         color: "rgba(0, 0, 0, 0.54)",
                       }}
                     >
                       <AllInboxOutlinedIcon />
-                    </Badge>
-                  }
-                />
-                <BottomNavigationAction
-                  label="Notifications"
-                  style={{ color: "rgba(0, 0, 0, 0.54)" }}
-                  value="notification"
-                  icon={
-                    <Badge badgeContent={6} color="secondary">
-                      <NotificationsActiveOutlinedIcon
-                        style={{
-                          color: "rgba(0, 0, 0, 0.54)",
-                        }}
-                      />
                     </Badge>
                   }
                 />
