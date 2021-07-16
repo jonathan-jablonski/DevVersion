@@ -6,7 +6,6 @@ const http = require("http");
 const app = express();
 
 const PORT = process.env.PORT || 3001;
-const URL = "mongodb://localhost/DevVersionDB";
 const morgan = require("morgan");
 const server = http.createServer(app);
 const socket = require("socket.io");
@@ -34,7 +33,7 @@ app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
-const mongoUrl = process.env.MONGODB_URI || URL;
+const mongoUrl = process.env.MONGODB_URI || "mongodb://localhost/DevVersionDB";
 console.log("MONGOURL", mongoUrl);
 mongoose.connect(mongoUrl, {
   useNewUrlParser: true,
