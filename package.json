@@ -22,6 +22,9 @@
     "morgan": "^1.10.0",
     "if-env": "^1.0.4"
   },
+  "engines": {
+    "node": "v12.19.0"
+  },
   "devDependencies": {
     "nodemon": "^2.0.4",
     "concurrently": "^6.2.0"
