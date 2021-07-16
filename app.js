@@ -1,11 +1,15 @@
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
-var cors = require("cors");
-
+const cors = require("cors");
+const http = require("http");
 const app = express();
+
 const PORT = process.env.PORT || 3001;
 const morgan = require("morgan");
+const server = http.createServer(app);
+const socket = require("socket.io");
+const io = socket(server);
 
 require("./server/models/user");
 require("./server/models/post");
@@ -43,6 +47,14 @@ mongoose.connection.on("connected", () => {
 mongoose.connection.on("error", (err) => {
   console.log("error while connecting to DevVersionDB : ", err);
 });
+
+io.on("connection", socket => {
+  socket.emit("your id", socket.id);
+  console.log("New person connected")
+  socket.on("send message", body => {
+      io.emit("message", body)
+  })
+})
 
 app.listen(PORT, () => {
   console.log(`Server is running under port ${PORT} ...`);

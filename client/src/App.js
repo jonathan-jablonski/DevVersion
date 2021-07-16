@@ -1,6 +1,7 @@
 import React, { useEffect, createContext, useReducer, useContext } from "react";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { reducer, initialState } from "./reducers/userReducer";
+import Store from "./pages/Store";
 import NavBar from "./components/Navbar";
 import Home from "./pages/Home";
 import GoogleLogin from "./pages/GoogleLogin";
@@ -12,6 +13,7 @@ import UserProfile from "./pages/UserProfile";
 import SubscribePost from "./pages/SubscribePosts";
 import Reset from "./pages/ResetPassword.js";
 import NewPass from "./pages/NewPassword.js";
+import Messages from "./pages/Messages.js";
 import "./App.css";
 
 export const UserContext = createContext();
@@ -42,6 +44,12 @@ const Routing = () => {
       <Route path="/create">
         <NavBar nav="add post" />
         <CreatePost />
+      </Route>
+      <Route exact path="/messages">
+        <NavBar nav="messages" />
+        <Store>
+        <Messages />
+        </Store>
       </Route>
       <Route exact path="/profile">
         <NavBar nav="profile" />
