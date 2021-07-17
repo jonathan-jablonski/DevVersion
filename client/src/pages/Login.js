@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   marginTop: "50px",
 
   Logo: {
-    fontFamily: "Grand Hotel, cursive",
+    fontFamily: "Modesto, text",
     margin: "40px 0px",
   },
   paper: {
@@ -112,7 +112,7 @@ const Login = () => {
               className={classes.Logo}
               variant="h2"
               gutterBottom
-              style={{ fontFamily: "Modesto, Text " }}
+              style={{ fontFamily: "Modesto, text " }}
             >
               DevVersion
             </Typography>
