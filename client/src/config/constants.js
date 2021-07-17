@@ -38,4 +38,4 @@ export const RESET_PWD_URL = `/resetpassword`;
 export const SIGNUP_URL = `/signup`;
 
 // SubscribePosts Screen
-export const SUB_POST_URL = `/subscribeposts`;
+export const SUB_POST_URL = `/subscribepost`;
