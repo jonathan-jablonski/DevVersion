@@ -20,7 +20,7 @@ import { GoogleLogin } from "react-google-login";
 import GoogleButton from "react-google-button";
 
 const clientId =
-  "746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com";
+  "17102702613-812krf9h90m3ljidi9o60v243rhqqpa3.apps.googleusercontent.com";
 // General Styles
 const useStyles = makeStyles((theme) => ({
   marginTop: "50px",
@@ -170,7 +170,7 @@ const Login = () => {
                 Sign In
               </Button>
            <GoogleLogin
-                clientId="746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com"
+                clientId="17102702613-812krf9h90m3ljidi9o60v243rhqqpa3.apps.googleusercontent.com"
                 render={(renderProps) => (
                   <GoogleButton
                     onClick={renderProps.onClick}
