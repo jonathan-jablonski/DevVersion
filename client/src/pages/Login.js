@@ -17,6 +17,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 import { GoogleLogin } from "react-google-login";
+import GoogleButton from "react-google-button";
 
 const clientId =
   "746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com";
@@ -168,16 +169,27 @@ const Login = () => {
               >
                 Sign In
               </Button>
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disabled={email !== "" && password !== "" ? false : true}
-                onClick={() => PostData()}
-              >
-                <Link to="/GoogleLogin"> Log In With Google</Link>
-              </Button>
+              <GoogleLogin
+                clientId="746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com"
+                render={(renderProps) => (
+                  <GoogleButton
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    className="login__button"
+                    style={{ marginTop: '80px' }}
+                    isSignedIn={true}
+                    cookiePolicy={"single_host_origin"}
+                    color="secondary"
+                    className={classes.submit}
+                    width={full}
+                    height={40}
+                    longTitle={true}
+                    theme="light"
+                  >
+                  </GoogleButton>
+                )}
+              
+              />
 
               <Grid container>
                 <Grid item xs>
