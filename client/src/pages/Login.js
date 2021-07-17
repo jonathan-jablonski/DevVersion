@@ -169,26 +169,19 @@ const Login = () => {
               >
                 Sign In
               </Button>
-              <GoogleLogin
+           <GoogleLogin
                 clientId="746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com"
                 render={(renderProps) => (
                   <GoogleButton
                     onClick={renderProps.onClick}
                     disabled={renderProps.disabled}
                     className="login__button"
-                    style={{ marginTop: '80px' }}
-                    isSignedIn={true}
-                    cookiePolicy={"single_host_origin"}
-                    color="secondary"
-                    className={classes.submit}
-                    width={full}
-                    height={40}
-                    longTitle={true}
-                    theme="light"
                   >
                   </GoogleButton>
                 )}
-              
+                style={{ marginTop: '80px' }}
+                isSignedIn={true}
+                cookiePolicy={"single_host_origin"}
               />
 
               <Grid container>
