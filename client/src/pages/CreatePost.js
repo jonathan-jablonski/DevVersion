@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-	return ["Select you image", "Tag a Friend", "Submit the post"];
+	return ["Select you image", "Submit the post"];
 }
 
 const CreatePoste = () => {
@@ -154,8 +154,6 @@ const CreatePoste = () => {
 					</div>
 				);
 			case 1:
-				return "This functionality isn't available for the moment";
-			case 2:
 				return;
 			default:
 				return "Unknown step";
