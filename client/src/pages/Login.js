@@ -112,7 +112,7 @@ const Login = () => {
               className={classes.Logo}
               variant="h2"
               gutterBottom
-              style={{ fontFamily: "Grand Hotel, cursive " }}
+              style={{ fontFamily: "Modesto, Text " }}
             >
               DevVersion
             </Typography>
