@@ -317,7 +317,7 @@ const Navbar = (props) => {
           <Toolbar>
             <Link to={state ? "/" : "/login"} className={classes.links}>
               <Typography className={classes.title} variant="h4" noWrap>
-                DevVerion
+                DevVersion
               </Typography>
             </Link>
             <div className={classes.grow} />
