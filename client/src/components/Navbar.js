@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
-    fontFamily: "Grand Hotel, cursive",
+    fontFamily: "Modesto, text",
     color: "rgba(0, 0, 0, 0.54)",
   },
   search: {
