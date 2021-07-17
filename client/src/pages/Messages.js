@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useContext } from 'react';
+
 import { makeStyles, Paper } from '@material-ui/core';
 import { Typography, Chip, Button, TextField } from '@material-ui/core';
-import { borderRight, height } from '@material-ui/system';
 import { List, ListItem, ListItemText } from '@material-ui/core'
-import { calculateObjectSize } from 'bson';
+
 
 import {CTX} from './Store'
 
@@ -47,15 +48,17 @@ const useStyles = makeStyles(theme => ({
 const Messages = () => {
 
   const classes = useStyles();
-  const [allChats] = React.useContext(CTX);
+  const { user } = useContext(CTX);
 
-  console.log({allChats});
+  console.log(user);
 
-  const topics = Object.keys(allChats)
   
-  const [activeChat, changeChat] = React.useState(topics[0])
+  const [activeChat, changeChat] = React.useState([])
   const [textValue, changeText] = React.useState('')
   const [searchVal, searchText] = React.useState('')
+
+  useEffect(() => {
+  })
 
   return (
     <div>
@@ -77,23 +80,23 @@ const Messages = () => {
           <div className={classes.topicsWindow}>
             <List>
               {
-                topics.map(topic => (
-                  <ListItem  onClick={e => changeChat(e.target.innerText)} key={topic} button>
-                    <ListItemText primary={topic} />
+                (
+                  <ListItem  button>
+                    <ListItemText primary='p' />
                   </ListItem>
-                ))
+                )
               }
             </List>
           </div>
           <div className={classes.chatWindow}>
           <div className={classes.topicTitle}>
-        <Typography varient='h5'>{activeChat}</Typography>
+        <Typography varient='h5'></Typography>
         </div>
             {
-              allChats[activeChat].map((chat, i) => (
+            [activeChat].map((chat, i) => (
                 <div className={classes.flex} key={i}>
-                  <Chip label={chat.from} className={classes.chip} />
-                  <Typography varient='p'>{chat.msg}</Typography>
+                  <Chip  className={classes.chip} />
+                  <Typography varient='p'>test</Typography>
                 </div>
               ))
             }
@@ -109,7 +112,10 @@ const Messages = () => {
           variant="outlined"
         />
       
-        <Button variant="contained" color="primary">
+        <Button 
+        variant="contained" 
+        color="primary" 
+        >
           Send
         </Button>    
         </div>
