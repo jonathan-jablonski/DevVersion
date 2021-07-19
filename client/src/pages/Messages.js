@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
+import Axios from "axios";
+import { UserContext } from "../App";
 
-import { makeStyles, Paper } from '@material-ui/core';
-import { Typography, Chip, Button, TextField } from '@material-ui/core';
+import { makeStyles, Paper, } from '@material-ui/core';
+import {  Button, TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
 import { List, ListItem, ListItemText } from '@material-ui/core'
 
 
-import {CTX} from './Store'
+import { CTX } from './Store'
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,11 +42,15 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center'
   },
   topicTitle: {
-   display: 'flex',
-   flexDirection: 'column',
-   justifyContent: 'center'
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
   }
 }))
+
+
+
+
 
 const Messages = () => {
 
@@ -52,72 +59,122 @@ const Messages = () => {
 
   console.log(user);
 
-  
+  const [search, setSearch] = useState([]);
   const [activeChat, changeChat] = React.useState([])
   const [textValue, changeText] = React.useState('')
-  const [searchVal, searchText] = React.useState('')
+
+
 
   useEffect(() => {
-  })
+    const getConvo = async () => {
+      console.log('hello world')
+      try {
+        const res = await axios.get("/convo")
+        console.log("this is convo res", res)
+        changeChat(res.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getConvo();
+  }, []);
+
+
+  const FindUser = (pattern) => {
+    if (!(pattern === "")) {
+      const URL = `http://localhost:3000/users-research`;
+      const config = {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+      };
+      Axios.post(URL, { pattern }, config).then((res) => {
+        setSearch(res.data);
+      });
+    }
+  };
 
   return (
     <div>
       <Paper className={classes.root}>
-      <div className={classes.search}>
-        <TextField
-          className={classes.searchbox}
-          id="outlined-required"
-          label="Search for somebody"
-          value={searchVal}
-          onChange={e => searchText(e.target.value)}
-          variant="outlined"
-        />
-        <Button variant="contained" color="primary">
-          Send
-        </Button>    
+        <div component="form" className={classes.search}>
+          <TextField
+            className={classes.searchbox}
+            label="Search for somebody"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ "aria-label": "search" }}
+            onChange={(e) => FindUser(e.target.value)}
+          />
+
+        </div>
+        <div>
+          <List className={classes.root}>
+            {search.user
+              ? search.user.map((item) => {
+                console.log(search.user)
+                return (
+                  <Link>
+                    <Divider
+                      variant="inset"
+                      component="li"
+                      style={{ marginLeft: "0px" }}
+                    />
+                    <ListItem alignItems="flex-start">
+                      <ListItemAvatar>
+                        <Avatar
+                          alt="Avatar"
+                          src="/static/images/avatar/1.jpg"
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={item.Name}
+                        secondary={<React.Fragment>{item.Email}</React.Fragment>}
+                      />
+                    </ListItem>
+                  </Link>
+                );
+              })
+              : null}
+          </List>
+
         </div>
         <div className={classes.flex}>
           <div className={classes.topicsWindow}>
             <List>
               {
                 (
-                  <ListItem  button>
-                    <ListItemText primary='p' />
+                  <ListItem button>
+                    {activeChat.map((user) =>
+                      <ListItemText key={user.id}>
+                        {user}
+                      </ListItemText>
+                    )}
                   </ListItem>
                 )
               }
+
             </List>
-          </div>
-          <div className={classes.chatWindow}>
-          <div className={classes.topicTitle}>
-        <Typography varient='h5'></Typography>
-        </div>
-            {
-            [activeChat].map((chat, i) => (
-                <div className={classes.flex} key={i}>
-                  <Chip  className={classes.chip} />
-                  <Typography varient='p'>test</Typography>
-                </div>
-              ))
-            }
           </div>
         </div>
         <div className={classes.flex}>
-        <TextField
-          className={classes.chatBox}
-          id="outlined-required"
-          label="Type here!"
-          value={textValue}
-          onChange={e => changeText(e.target.value)}
-          variant="outlined"
-        />
-      
-        <Button 
-        variant="contained" 
-        color="primary" 
-        >
-          Send
-        </Button>    
+          <TextField
+            className={classes.chatBox}
+            id="outlined-required"
+            label="Type here!"
+            value={textValue}
+            onChange={e => changeText(e.target.value)}
+            variant="outlined"
+          />
+
+          <Button
+            variant="contained"
+            color="primary"
+          >
+            Send
+          </Button>
         </div>
 
       </Paper>
