@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const Conversations = require("../models/conversations")
+const Conversations = require("../models/conversations");
+const messages = require('../models/messages');
 
 
 router.post("/conversations", async (req, res) => {
@@ -18,8 +19,8 @@ router.post("/conversations", async (req, res) => {
 
 router.get("/conversations/:userId/", async (req, res) => {
     try {
-        const conversations = await Conversations.find({
-            userOne: req.body.userId,
+        const conversations = await Messages.find({
+            messages: req.body.text
         });
         console.log('this is res: ', conversations)
         res.status(200).json(conversations)
