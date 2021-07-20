@@ -14,6 +14,7 @@ import SubscribePost from "./pages/SubscribePosts";
 import Reset from "./pages/ResetPassword.js";
 import NewPass from "./pages/NewPassword.js";
 import Messages from "./pages/Messages.js";
+import Box from "@material-ui/core/Box";
 import "./App.css";
 
 export const UserContext = createContext();
@@ -32,6 +33,7 @@ const Routing = () => {
     }
   }, []);
   return (
+    <Box>
     <Switch>
       <Route exact path="/">
         <NavBar nav="home" />
@@ -75,6 +77,7 @@ const Routing = () => {
         <NewPass />
       </Route>
     </Switch>
+</Box>
   );
 };
 
