@@ -26,8 +26,9 @@ import Modal from "@material-ui/core/Modal";
 // Material-UI Icons
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
-import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
+//import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import AddAPhotoOutlinedIcon from "@material-ui/icons/AddAPhotoOutlined";
+import GitHubIcon from '@material-ui/icons/GitHub';
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import AllInboxOutlinedIcon from "@material-ui/icons/AllInboxOutlined";
 import NotificationsActiveOutlinedIcon from "@material-ui/icons/NotificationsActiveOutlined";
@@ -191,13 +192,13 @@ const Navbar = (props) => {
       </MenuItem>
       <MenuItem component={Link} to="/explore">
         <IconButton>
-          <ExploreOutlinedIcon
+          <GitHubIcon
             style={{
               color: "rgba(0, 0, 0, 0.54)",
             }}
           />
         </IconButton>
-        <p>Explore</p>
+        <p>GitHub</p>
       </MenuItem>
       <MenuItem component={Link} to="/create">
         <IconButton>
@@ -355,7 +356,7 @@ const Navbar = (props) => {
                   to="/explore"
                   style={{ color: "rgba(0, 0, 0, 0.54)" }}
                   icon={
-                    <ExploreOutlinedIcon
+                    <GitHubIcon
                       style={{
                         color: "rgba(0, 0, 0, 0.54)",
                       }}
