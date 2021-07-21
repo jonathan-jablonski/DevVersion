@@ -1,4 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@1,300&display=swap");
+
+body{
+	background-color: rgb(121, 189, 216) !important;
+}
 
 a {
 	color: black !important;
@@ -6,7 +10,7 @@ a {
 
 .brand-logo,
 h2 {
-	font-family: "Grand Hotel", cursive;
+	font-family: "Roboto Mono", text;
 }
 .mycard {
 	margin-top: 30px;
