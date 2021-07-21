@@ -6,12 +6,14 @@ const conversationSchema = new mongoose.Schema(
     userOne:
     {
       type: ObjectId,
-      ref: "User"
+      ref: "User",
+      required: true
     },
     userTwo:
     {
       type: ObjectId,
-      ref: "User"
+      ref: "User",
+      required: true
     },
     messages: [{
       type: ObjectId,

@@ -85,6 +85,7 @@ const Login = () => {
             //we can show that success PopUp or not depends on dev choice
             //
             // we redirect the user to home page
+            console.log(data.user)
             history.push("/");
           }
         })

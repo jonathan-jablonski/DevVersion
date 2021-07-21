@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 const Messages = require("../models/messages")
 
-router.post("/", async (req, res) => {
+router.post("/messages", async (req, res) => {
     const newMessage = new Messages({
         text: req.body.text
     })
@@ -14,10 +14,10 @@ router.post("/", async (req, res) => {
     }
 })
 
-router.get("/messages/:convoId", async (req, res) => {
+router.get("/messages/:messageId", async (req, res) => {
     try{
         const messages = await Messages.find({
-            convoId: req.params.convoId
+            _id: req.params.id
         })
         res.status(200).json(messages)
     }catch(err){

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
-import Axios from "axios";
+import axios from "axios";
 import { UserContext } from "../App";
 
 import { makeStyles, Paper, } from '@material-ui/core';
-import {  Button, TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
+import { Button, TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
 import { List, ListItem, ListItemText } from '@material-ui/core'
 
 
 import { CTX } from './Store'
-import axios from 'axios';
+import { CREATE_CONVERSATION_URL, config } from '../config/constants';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,6 +45,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center'
+  },
+  searchresult: {
+    width: '10%'
   }
 }))
 
@@ -59,19 +62,20 @@ const Messages = () => {
 
   console.log(user);
 
-  const [search, setSearch] = useState([]);
-  const [activeChat, changeChat] = React.useState([])
-  const [textValue, changeText] = React.useState('')
 
+  const [searchUsers, setSearchUsers] = useState([]);
+  const [activeConvos, setActiveConvos] = React.useState([])
+  const [textValue, setTextValue] = React.useState('')
 
+  console.log(searchUsers)
 
   useEffect(() => {
     const getConvo = async () => {
       console.log('hello world')
       try {
-        const res = await axios.get("/convo")
-        console.log("this is convo res", res)
-        changeChat(res.data)
+        const res = await axios.get(CREATE_CONVERSATION_URL, config)
+        console.log("this is convo res", res.data)
+        setActiveConvos(res.data)
       } catch (err) {
         console.log(err)
       }
@@ -88,11 +92,26 @@ const Messages = () => {
           Authorization: "Bearer " + localStorage.getItem("jwt"),
         },
       };
-      Axios.post(URL, { pattern }, config).then((res) => {
-        setSearch(res.data);
+      axios.post(URL, { pattern }, config).then((res) => {
+        setSearchUsers(res.data);
       });
     }
   };
+
+  const createConvo = (userTwo) => {
+
+		axios.post(
+			CREATE_CONVERSATION_URL,
+			{
+				userOne: user._id,
+        userTwo: userTwo._id
+			},
+			config
+		).then((convo) => {
+      console.log(convo)
+		});
+    console.log(userTwo)
+	};
 
   return (
     <div>
@@ -112,15 +131,15 @@ const Messages = () => {
         </div>
         <div>
           <List className={classes.root}>
-            {search.user
-              ? search.user.map((item) => {
-                console.log(search.user)
+            {searchUsers.user
+              ? searchUsers.user.map((searchUser) => {
                 return (
-                  <Link>
-                    <Divider
+                  <Link 
+                  onClick={() => createConvo(searchUser)}
+                  >
+                    <Divider className={classes.searchresult}
                       variant="inset"
                       component="li"
-                      style={{ marginLeft: "0px" }}
                     />
                     <ListItem alignItems="flex-start">
                       <ListItemAvatar>
@@ -130,8 +149,8 @@ const Messages = () => {
                         />
                       </ListItemAvatar>
                       <ListItemText
-                        primary={item.Name}
-                        secondary={<React.Fragment>{item.Email}</React.Fragment>}
+                        primary={searchUser.Name}
+                        secondary={<React.Fragment>{searchUser.Email}</React.Fragment>}
                       />
                     </ListItem>
                   </Link>
@@ -147,10 +166,14 @@ const Messages = () => {
               {
                 (
                   <ListItem button>
-                    {activeChat.map((user) =>
-                      <ListItemText key={user.id}>
-                        {user}
-                      </ListItemText>
+                    {activeConvos.map((convo, index) => {
+                      return (
+                       <ListItemText key={index}>
+                       {convo.userTwo.Name}
+                       {convo._id}
+                     </ListItemText>
+                      )}
+                     
                     )}
                   </ListItem>
                 )
@@ -165,7 +188,7 @@ const Messages = () => {
             id="outlined-required"
             label="Type here!"
             value={textValue}
-            onChange={e => changeText(e.target.value)}
+            onChange={e => setTextValue(e.target.value)}
             variant="outlined"
           />
 

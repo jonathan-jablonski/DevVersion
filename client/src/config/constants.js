@@ -39,3 +39,6 @@ export const SIGNUP_URL = `/signup`;
 
 // SubscribePosts Screen
 export const SUB_POST_URL = `/subscribeposts`;
+
+//Message Screen
+export const  CREATE_CONVERSATION_URL = `/conversations`

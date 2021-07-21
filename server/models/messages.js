@@ -18,4 +18,8 @@ const MessageSchema = new mongoose.Schema(
   }
 );
 
+// MessageSchema.methods.saveMessageConvo = (msg, convoId, cb ) => {
+      
+// }
+
 module.exports = mongoose.model("Messages", MessageSchema);

@@ -18,15 +18,19 @@ router.post("/conversations", loginMiddleware, async (req, res) => {
     }
 })
 
-router.get("/conversations/", loginMiddleware, async (req, res) => {
+router.get("/conversations", loginMiddleware, async (req, res) => {
     try {
+        console.log(req.user._id)
         const conversations = await Conversations.find({
             userOne: req.user._id,
-        });
+        })
+        .populate('userOne')
+        .populate('userTwo')
+        .populate('messages')
         res.status(200).json(conversations)
     } catch (err) {
         res.status(500).json(err);
     }
 })
 
-module.exports = router;
+module.exports = router; 
