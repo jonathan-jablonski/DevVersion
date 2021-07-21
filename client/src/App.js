@@ -10,7 +10,7 @@ import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost.js";
 import Profile from "./pages/Profile";
 import UserProfile from "./pages/UserProfile";
-import SubscribePost from "./pages/SubscribePosts";
+import GHSearch from "./pages/GHSearch";
 import Reset from "./pages/ResetPassword.js";
 import NewPass from "./pages/NewPassword.js";
 import Messages from "./pages/Messages.js";
@@ -39,9 +39,9 @@ const Routing = () => {
         <NavBar nav="home" />
         <Home />
       </Route>
-      <Route path="/explore">
-        <NavBar nav="explore" />
-        <SubscribePost />
+      <Route path="/gitsearch">
+        <NavBar nav="gitsearch" />
+        <GHSearch />
       </Route>
       <Route path="/create">
         <NavBar nav="add post" />

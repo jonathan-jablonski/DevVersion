@@ -26,7 +26,7 @@ import Modal from "@material-ui/core/Modal";
 // Material-UI Icons
 import MoreIcon from "@material-ui/icons/MoreVert";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
-//import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
+//import gitsearchOutlinedIcon from "@material-ui/icons/gitsearchOutlined";
 import AddAPhotoOutlinedIcon from "@material-ui/icons/AddAPhotoOutlined";
 import GitHubIcon from '@material-ui/icons/GitHub';
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
@@ -190,7 +190,7 @@ const Navbar = (props) => {
         </IconButton>
         <p>Search</p>
       </MenuItem>
-      <MenuItem component={Link} to="/explore">
+      <MenuItem component={Link} to="/gitsearch">
         <IconButton>
           <GitHubIcon
             style={{
@@ -350,10 +350,10 @@ const Navbar = (props) => {
                   }
                 />
                 <BottomNavigationAction
-                  label="Explore"
-                  value="explore"
+                  label="Git Search"
+                  value="gitsearch"
                   component={Link}
-                  to="/explore"
+                  to="/gitsearch"
                   style={{ color: "rgba(0, 0, 0, 0.54)" }}
                   icon={
                     <GitHubIcon
