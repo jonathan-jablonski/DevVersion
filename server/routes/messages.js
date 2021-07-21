@@ -3,7 +3,9 @@ const router = express.Router();
 const Messages = require("../models/messages")
 
 router.post("/messages", async (req, res) => {
-    const newMessage = new Messages(req.body)
+    const newMessage = new Messages({
+        text: req.body.text
+    })
     try{
         const saveMessage = await newMessage.save();
         res.status(200).json(saveMessage)
@@ -12,10 +14,10 @@ router.post("/messages", async (req, res) => {
     }
 })
 
-router.get("/messages/:convoId", async (req, res) => {
+router.get("/messages/:messageId", async (req, res) => {
     try{
         const messages = await Messages.find({
-            convoId: req.params.convoId
+            _id: req.params.id
         })
         res.status(200).json(messages)
     }catch(err){

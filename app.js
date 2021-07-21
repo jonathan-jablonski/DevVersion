@@ -12,7 +12,7 @@ const io = require('socket.io')(http);
 
 require("./server/models/user");
 require("./server/models/post");
-require("./server/models/convo");
+require("./server/models/conversations");
 require("./server/models/messages");
 
 app.use(cors());
@@ -22,7 +22,7 @@ app.use(require("./server/routes/auth"));
 app.use(require("./server/routes/post"));
 app.use(require("./server/routes/user"));
 app.use(require("./server/routes/messages"));
-app.use(require("./server/routes/convo"));
+app.use(require("./server/routes/conversations"));
 
 app.use(morgan());
 

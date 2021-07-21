@@ -1,18 +1,25 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema.Types;
 
 const MessageSchema = new mongoose.Schema(
   {
-    convoId: {
-      type: String,
-    },
     sender: {
-      type: String,
+      type: ObjectId,
+      ref: "User"
     },
     text: {
       type: String,
+      required: true
     },
-  },
-  { timestamps: true }
+    date: {
+      type: String,
+      default: Date.now,
+    },
+  }
 );
+
+// MessageSchema.methods.saveMessageConvo = (msg, convoId, cb ) => {
+      
+// }
 
 module.exports = mongoose.model("Messages", MessageSchema);

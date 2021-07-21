@@ -200,7 +200,6 @@ const ProfilePage = () => {
 					}}
 				>
 					<Tab label="Posts" value="Posts" icon={<Icon>grid_on_outlined</Icon>} />
-					<Tab label="IGTV" value="IGTV" icon={<Icon>live_tv</Icon>} disabled />
 					<Tab label="Saved" value="Saved" icon={<Icon>bookmark_border_outlined</Icon>} />
 					<Tab label="Tagged" value="Tagged" icon={<Icon>local_offer_outlined</Icon>} disabled />
 				</Tabs>
