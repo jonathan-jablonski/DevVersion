@@ -2,11 +2,12 @@ const express = require('express')
 const router = express.Router();
 const Conversations = require("../models/conversations");
 const messages = require('../models/messages');
+const loginMiddleware = require("../middleware/loginMiddleware.js");
 
 
-router.post("/conversations", async (req, res) => {
+router.post("/conversations", loginMiddleware, async (req, res) => {
     const newConversations = new Conversations({
-        userOne: req.body.userOne,
+        userOne: req.user._id,
         userTwo: req.body.userTwo,
     })
     try {
@@ -17,16 +18,19 @@ router.post("/conversations", async (req, res) => {
     }
 })
 
-router.get("/conversations/:userId/", async (req, res) => {
+router.get("/conversations", loginMiddleware, async (req, res) => {
     try {
-        const conversations = await Messages.find({
-            messages: req.body.text
-        });
-        console.log('this is res: ', conversations)
+        console.log(req.user._id)
+        const conversations = await Conversations.find({
+            userOne: req.user._id,
+        })
+        .populate('userOne')
+        .populate('userTwo')
+        .populate('messages')
         res.status(200).json(conversations)
     } catch (err) {
         res.status(500).json(err);
     }
 })
 
-module.exports = router;
+module.exports = router; 

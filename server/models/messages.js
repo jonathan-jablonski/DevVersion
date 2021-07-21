@@ -3,10 +3,6 @@ const { ObjectId } = mongoose.Schema.Types;
 
 const MessageSchema = new mongoose.Schema(
   {
-    conversationsId: {
-      type: ObjectId,
-      ref: "Conversations",
-    },
     sender: {
       type: ObjectId,
       ref: "User"
@@ -21,5 +17,9 @@ const MessageSchema = new mongoose.Schema(
     },
   }
 );
+
+// MessageSchema.methods.saveMessageConvo = (msg, convoId, cb ) => {
+      
+// }
 
 module.exports = mongoose.model("Messages", MessageSchema);
