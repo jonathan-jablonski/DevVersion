@@ -100,18 +100,18 @@ const Messages = () => {
 
   const createConvo = (userTwo) => {
 
-		axios.post(
-			CREATE_CONVERSATION_URL,
-			{
-				userOne: user._id,
+    axios.post(
+      CREATE_CONVERSATION_URL,
+      {
+        userOne: user._id,
         userTwo: userTwo._id
-			},
-			config
-		).then((convo) => {
+      },
+      config
+    ).then((convo) => {
       console.log(convo)
-		});
+    });
     console.log(userTwo)
-	};
+  };
 
   return (
     <div>
@@ -134,8 +134,8 @@ const Messages = () => {
             {searchUsers.user
               ? searchUsers.user.map((searchUser) => {
                 return (
-                  <Link 
-                  onClick={() => createConvo(searchUser)}
+                  <Link
+                    onClick={() => createConvo(searchUser)}
                   >
                     <Divider className={classes.searchresult}
                       variant="inset"
@@ -162,24 +162,23 @@ const Messages = () => {
         </div>
         <div className={classes.flex}>
           <div className={classes.topicsWindow}>
-            <List>
-              {
-                (
-                  <ListItem button>
-                    {activeConvos.map((convo, index) => {
-                      return (
-                       <ListItemText key={index}>
-                       {convo.userTwo.Name}
-                       {convo._id}
-                     </ListItemText>
-                      )}
-                     
-                    )}
-                  </ListItem>
-                )
-              }
-
-            </List>
+            {activeConvos.map((convo, index) => {
+              return (
+                <List>
+                  {
+                    (
+                      <ListItem button>
+                        <ListItemText key={index}>
+                          {convo.userTwo.Name}
+                          {convo._id}
+                        </ListItemText>
+                      </ListItem>
+                    )
+                  }
+                </List>
+              )
+            }
+            )}
           </div>
         </div>
         <div className={classes.flex}>
