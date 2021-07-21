@@ -37,8 +37,9 @@ export const RESET_PWD_URL = `/resetpassword`;
 // SignUp Screen
 export const SIGNUP_URL = `/signup`;
 
-// SubscribePosts Screen
-export const SUB_POST_URL = `/subscribeposts`;
+
+// GHSearch Screen
+export const SUB_POST_URL = `/GHSearch`;
 
 //Message Screen
 export const  CREATE_CONVERSATION_URL = `/conversations`

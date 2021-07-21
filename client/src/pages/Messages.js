@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import axios from "axios";
 import { UserContext } from "../App";
-
 import { makeStyles, Paper, } from '@material-ui/core';
 import { Button, TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
 import { List, ListItem, ListItemText } from '@material-ui/core'
-
-
 import { CTX } from './Store'
 import { CREATE_CONVERSATION_URL, config } from '../config/constants';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
