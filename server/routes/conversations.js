@@ -6,11 +6,11 @@ const loginMiddleware = require("../middleware/loginMiddleware.js");
 
 
 router.post("/conversations", loginMiddleware, async (req, res) => {
+    try {
     const newConversations = new Conversations({
         userOne: req.user._id,
         userTwo: req.body.userTwo,
     })
-    try {
         const saveConversations = await newConversations.save();
         res.status(200).json(saveConversations)
     } catch (err) {
