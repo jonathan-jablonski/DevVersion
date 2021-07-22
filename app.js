@@ -23,6 +23,7 @@ app.use(require("./server/routes/post"));
 app.use(require("./server/routes/user"));
 app.use(require("./server/routes/messages"));
 app.use(require("./server/routes/conversations"));
+app.use(require("./server/routes/google"));
 
 app.use(morgan());
 
