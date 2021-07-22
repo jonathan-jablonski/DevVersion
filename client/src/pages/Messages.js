@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from "axios";
-import { UserContext } from "../App";
 import { makeStyles, Paper, } from '@material-ui/core';
 import { Button, TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
 import { List, ListItem, ListItemText } from '@material-ui/core'
@@ -58,9 +56,6 @@ const Messages = () => {
   const classes = useStyles();
   const { user } = useContext(CTX);
 
-  console.log(user);
-
-
   const [searchUsers, setSearchUsers] = useState([]);
   const [activeConvos, setActiveConvos] = React.useState([])
   const [textValue, setTextValue] = React.useState('')
@@ -69,7 +64,6 @@ const Messages = () => {
 
   useEffect(() => {
     const getConvo = async () => {
-      console.log('hello world')
       try {
         const res = await axios.get(CREATE_CONVERSATION_URL, config)
         console.log("this is convo res", res.data)
@@ -96,19 +90,30 @@ const Messages = () => {
     }
   };
 
-  const createConvo = (userTwo) => {
-
-    axios.post(
-      CREATE_CONVERSATION_URL,
-      {
-        userOne: user._id,
-        userTwo: userTwo._id
-      },
-      config
-    ).then((convo) => {
-      console.log(convo)
-    });
-    console.log(userTwo)
+  const createConvo = async (userTwo) => {
+    try {
+      const foundConvo = activeConvos.filter((convo) => 
+        convo.userTwo._id === userTwo._id
+      )
+      console.log(foundConvo)
+      if(foundConvo.length != 0 ){
+        return;
+      }
+      await axios.post(
+        CREATE_CONVERSATION_URL,
+        {
+          userOne: user._id,
+          userTwo: userTwo._id
+        },
+        config
+      ).then((convo) => {
+        console.log(convo)
+        setActiveConvos([...activeConvos, convo.data])
+      });
+    } catch (err) {
+      console.log('this is the error', err)
+      console.log(err.msg)
+    }
   };
 
   return (
@@ -168,7 +173,6 @@ const Messages = () => {
                       <ListItem button>
                         <ListItemText key={index}>
                           {convo.userTwo.Name}
-                          {convo._id}
                         </ListItemText>
                       </ListItem>
                     )
