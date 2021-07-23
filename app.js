@@ -3,7 +3,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-const http = require("http").createServer(app)
+const http = require("http").createServer(app);
+
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 
 const PORT = process.env.PORT || 3001;
@@ -28,6 +31,9 @@ app.use(morgan());
 
 // tells if application is on heroku
 app.use(express.static("client/build"));
+
+app.use(passport.initialize()); 
+require('./server/routes/passport');
 
 // Send every request to the React app
 // Define any API routes before this runs

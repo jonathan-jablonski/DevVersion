@@ -13,6 +13,9 @@ sgMail.setApiKey("SENDGRID_API_KEY");
 const User = mongoose.model("User");
 const router = express.Router();
 
+const passport = require('passport');
+
+
 // Route to handle SignUp requests
 router.post("/signup", (req, res) => {
   const { name, email, password } = req.body;
@@ -58,7 +61,7 @@ router.post("/signup", (req, res) => {
     });
 });
 
-// Route to handle SignIn requests
+// Route to handle SignIn requests using server hosted by the site
 router.post("/signin", (req, res) => {
   console.log("SIGNIN");
   const { email, password } = req.body;
@@ -173,5 +176,20 @@ router.post("/new-pwd", (req, res) => {
       console.log(err);
     });
 });
+
+// Passport Google OAuth routes
+router.get(
+    "/auth/google",
+    passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+router.get(
+    "/auth/google/callback",
+    passport.authenticate("google", { failureRedirect: "/", session: false }),
+    function(req, res) {
+        var token = req.user.token;
+        res.redirect("http://localhost:3000?token=" + token);
+    }
+);
 
 module.exports = router;

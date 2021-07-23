@@ -7,6 +7,8 @@ import { GoogleLogin } from 'react-google-login';
 const clientId =
   '746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com';
 
+const clientSecret = 'AJa2qzeHWvd68gTav5l4udT3';
+
 function Login() {
   const onSuccess = (res) => {
     console.log('Login Success: currentUser:', res.profileObj);
@@ -27,6 +29,7 @@ function Login() {
     <div>
       <GoogleLogin
         clientId={clientId}
+        clientSecret={clientSecret}
         buttonText="Google Login"
         onSuccess={onSuccess}
         onFailure={onFailure}
