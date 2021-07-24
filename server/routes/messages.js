@@ -1,26 +1,30 @@
 const express = require('express')
 const router = express.Router();
 const Messages = require("../models/messages")
+const loginMiddleware = require("../middleware/loginMiddleware.js");
 
-router.post("/messages", async (req, res) => {
+router.post("/messages", loginMiddleware, async (req, res) => {
     const newMessage = new Messages({
-        text: req.body.text
+        sender: req.body.sender,
+        text: req.body.text,
+        date: req.body.date
     })
-    try{
+    try {
         const saveMessage = await newMessage.save();
         res.status(200).json(saveMessage)
-    }catch(err){
+    } catch (err) {
         res.status(500).json(err)
     }
 })
 
-router.get("/messages/:messageId", async (req, res) => {
-    try{
+router.get("/messages", loginMiddleware, async (req, res) => {
+    try {
         const messages = await Messages.find({
-            _id: req.params.id
+            sender: req.user._id
         })
+        console.log('This is req.body', req.body)
         res.status(200).json(messages)
-    }catch(err){
+    } catch (err) {
         res.status(500).json(err)
     }
 })
