@@ -13,6 +13,12 @@ sgMail.setApiKey("SENDGRID_API_KEY");
 const User = mongoose.model("User");
 const router = express.Router();
 
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GOOGLE_CLIENT_ID =
+  '746742004572-o016idimfp27hv64fi9l452nh98lk711.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = 'dGX0jows4ngS8X-ZnHR9I_LH';
+
 // Route to handle SignUp requests
 router.post("/signup", (req, res) => {
   const { name, email, password } = req.body;
@@ -58,7 +64,7 @@ router.post("/signup", (req, res) => {
     });
 });
 
-// Route to handle SignIn requests
+// Route to handle SignIn requests using server hosted by the site
 router.post("/signin", (req, res) => {
   console.log("SIGNIN");
   const { email, password } = req.body;
@@ -173,5 +179,39 @@ router.post("/new-pwd", (req, res) => {
       console.log(err);
     });
 });
+
+// Passport Google OAuth routes
+router.get(
+    "/auth/google",
+    passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+passport.use(
+ new GoogleStrategy(
+  {
+   clientID: GOOGLE_CLIENT_ID,
+   clientSecret: GOOGLE_CLIENT_SECRET,
+   callbackURL: "http://localhost:3000/auth/google/redirect" || "https://devver.herokuapp.com/auth/google/redirect"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    let userData = {
+        email: profile.emails[0].value,
+        name: profile.displayName,
+        token: accessToken
+    };
+    console.log('User Data:', userData);
+   done(null, userData);
+  }
+ )
+);
+
+router.get(
+    "/auth/google/callback",
+    passport.authenticate("google", { failureRedirect: "/", session: false }),
+    function(req, res) {
+        const googleToken = req.user.token;
+        res.redirect("http://localhost:3000/");
+    }
+);
 
 module.exports = router;

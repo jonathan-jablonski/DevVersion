@@ -3,8 +3,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
-const http = require("http").createServer(app)
+const http = require("http").createServer(app);
 
+const passport = require('passport');
 
 const PORT = process.env.PORT || 3001;
 const morgan = require("morgan");
@@ -29,12 +30,27 @@ app.use(morgan());
 // tells if application is on heroku
 app.use(express.static("client/build"));
 
+passport.serializeUser(function(user, done) {
+ done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+ done(null, user);
+});
+app.use(passport.initialize()); 
+app.use(passport.session(
+  console.log('PASSPORT IS IN!!!!!!!!')
+));
+
+
 // Send every request to the React app
 // Define any API routes before this runs
 app.get("*", function (req, res) {
   console.log("CATCHING ALL!");
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
+
+
 
 const mongoUrl = process.env.MONGODB_URI || "mongodb://localhost/DevVersionDB";
 console.log("MONGOURL", mongoUrl);

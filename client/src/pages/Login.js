@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { UserContext } from "../App";
 import { LOGIN_URL } from "../config/constants";
 import Copyright from "../components/Copyight";
@@ -20,7 +20,7 @@ import { GoogleLogin } from "react-google-login";
 import GoogleButton from "react-google-button";
 
 const clientId =
-  "17102702613-812krf9h90m3ljidi9o60v243rhqqpa3.apps.googleusercontent.com";
+  "746742004572-o016idimfp27hv64fi9l452nh98lk711.apps.googleusercontent.com";
 // General Styles
 const useStyles = makeStyles((theme) => ({
   marginTop: "50px",
@@ -171,12 +171,13 @@ const Login = () => {
                 Sign In
               </Button>
            <GoogleLogin
-                clientId="17102702613-812krf9h90m3ljidi9o60v243rhqqpa3.apps.googleusercontent.com"
+                clientId="746742004572-o016idimfp27hv64fi9l452nh98lk711.apps.googleusercontent.com"
                 render={(renderProps) => (
                   <GoogleButton
                     onClick={renderProps.onClick}
                     disabled={renderProps.disabled}
                     className="login__button"
+                    
                   >
                   </GoogleButton>
                 )}
