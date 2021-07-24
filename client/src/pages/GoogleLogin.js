@@ -1,13 +1,14 @@
 
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
+
 // refresh token
 //import { refreshTokenSetup } from '../utils/refreshToken';
 
 const clientId =
-  '746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com';
+  '746742004572-o016idimfp27hv64fi9l452nh98lk711.apps.googleusercontent.com';
 
-const clientSecret = 'AJa2qzeHWvd68gTav5l4udT3';
+const clientSecret = 'dGX0jows4ngS8X-ZnHR9I_LH';
 
 function Login() {
   const onSuccess = (res) => {
@@ -15,6 +16,7 @@ function Login() {
     alert(
       `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
     );
+    res.redirect('/');
     //refreshTokenSetup(res);
   };
 

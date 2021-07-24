@@ -64,7 +64,7 @@ const Routing = () => {
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/auth/google/redirect">
+      <Route path="/auth/google/">
         <GoogleLogin />
       </Route>
       <Route path="/signup">
