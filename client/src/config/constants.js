@@ -43,3 +43,5 @@ export const SUB_POST_URL = `/GHSearch`;
 
 //Message Screen
 export const  CREATE_CONVERSATION_URL = `/conversations`
+export const  CREATE_MESSAGE_URL = `/messages`
+

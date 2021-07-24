@@ -20,7 +20,6 @@ router.post("/conversations", loginMiddleware, async (req, res) => {
 
 router.get("/conversations", loginMiddleware, async (req, res) => {
     try {
-        console.log(req.user._id)
         const conversations = await Conversations.find({
             userOne: req.user._id,
         })
