@@ -10,7 +10,7 @@ import { IconButton, TextField, Link, Divider, ListItemAvatar, Avatar } from '@m
 import { List, ListItem, ListItemText, Grid, Button } from '@material-ui/core';
 
 
-const socket = io.connect("http://localhost:3000");
+const socket = io.connect("ws://localhost:3002");
 
 //Styles the classes
 const useStyles = makeStyles(theme => ({
@@ -78,6 +78,7 @@ const Messages = () => {
       try {
         const res = await axios.get(CREATE_MESSAGE_URL, config)
         setMessage(res.data)
+        socket.emit('send message', {})
         console.log('Message res', res)
       } catch (err) {
         console.log(err)
