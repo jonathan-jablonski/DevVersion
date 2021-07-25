@@ -69,9 +69,13 @@ mongoose.connection.on("error", (err) => {
 });
 
 io.on('connection', function(socket) {
-  console.log("New person connected")
-  socket.on('chat msg', function(msg){
-    console.log('message: ' + msg)
+  const { id } = socket.client;
+  console.log(`User connected: ${id}`);
+  socket.on('disconnect', function(){
+    console.log('User Disconnected');
+  });
+  socket.on('send message', body => {
+    console.log('message: ' + body) 
   })
 })
 

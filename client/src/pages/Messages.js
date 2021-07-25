@@ -1,12 +1,18 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import axios from "axios";
-import { makeStyles, Paper, } from '@material-ui/core';
-import { Button, TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
-import { List, ListItem, ListItemText } from '@material-ui/core'
-import { CTX } from './Store'
-import { CREATE_CONVERSATION_URL, config } from '../config/constants';
+import { CTX } from './Store';
+import { CREATE_CONVERSATION_URL, config, CREATE_MESSAGE_URL } from '../config/constants';
+import io from "socket.io-client";
+
+// Material UI styling
+import { makeStyles, Paper, Typography, } from '@material-ui/core';
+import { IconButton, TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
+import { List, ListItem, ListItemText, Grid, Button } from '@material-ui/core';
 
 
+const socket = io.connect("http://localhost:3000");
+
+//Styles the classes
 const useStyles = makeStyles(theme => ({
   root: {
     margin: '50px',
@@ -34,11 +40,11 @@ const useStyles = makeStyles(theme => ({
   search: {
     width: '20%'
   },
-  searchbox: {
-    alignItems: 'center'
+  messageBox: {
+    display: 'flex'
   },
   topicTitle: {
-    display: 'flex',
+    right: '20px',
     flexDirection: 'column',
     justifyContent: 'center'
   },
@@ -53,21 +59,40 @@ const useStyles = makeStyles(theme => ({
 
 const Messages = () => {
 
+  //Consts
   const classes = useStyles();
   const { user } = useContext(CTX);
 
+
+  //States
   const [searchUsers, setSearchUsers] = useState([]);
   const [activeConvos, setActiveConvos] = React.useState([])
-  const [textValue, setTextValue] = React.useState('')
+  const [message, setMessage] = React.useState([]);
+  const [newMessage, setnewMessage] = React.useState("")
 
-  console.log(searchUsers)
 
+
+  // Get messages
+  useEffect(() => {
+    const getMessage = async () => {
+      try {
+        const res = await axios.get(CREATE_MESSAGE_URL, config)
+        setMessage(res.data)
+        console.log('Message res', res)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getMessage();
+  }, []);
+
+  //Gets conversations
   useEffect(() => {
     const getConvo = async () => {
       try {
         const res = await axios.get(CREATE_CONVERSATION_URL, config)
-        console.log("this is convo res", res.data)
         setActiveConvos(res.data)
+        console.log('Conversations', res)
       } catch (err) {
         console.log(err)
       }
@@ -76,6 +101,8 @@ const Messages = () => {
   }, []);
 
 
+
+  // Allows users to find profiles
   const FindUser = (pattern) => {
     if (!(pattern === "")) {
       const URL = `http://localhost:3000/users-research`;
@@ -90,13 +117,14 @@ const Messages = () => {
     }
   };
 
+  //Creates conversation when selected in search
   const createConvo = async (userTwo) => {
     try {
-      const foundConvo = activeConvos.filter((convo) => 
+      const foundConvo = activeConvos.filter((convo) =>
         convo.userTwo._id === userTwo._id
       )
       console.log(foundConvo)
-      if(foundConvo.length != 0 ){
+      if (foundConvo.length != 0) {
         return;
       }
       await axios.post(
@@ -115,6 +143,32 @@ const Messages = () => {
       console.log(err.msg)
     }
   };
+
+
+  const createMessage = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(
+        CREATE_MESSAGE_URL,
+        {
+          sender: user._id,
+          text: newMessage,
+          date: Date.now
+        },
+        config
+      ).then((receivedMessage) => {
+        console.log(receivedMessage)
+        setMessage([...message, receivedMessage.data])
+        setnewMessage("")
+        
+      });
+    } catch (err) {
+      console.log('this is the error', err)
+      console.log(err.msg)
+    }
+  };
+
+
 
   return (
     <div>
@@ -148,7 +202,6 @@ const Messages = () => {
                       <ListItemAvatar>
                         <Avatar
                           alt="Avatar"
-                          src="/static/images/avatar/1.jpg"
                         />
                       </ListItemAvatar>
                       <ListItemText
@@ -171,7 +224,7 @@ const Messages = () => {
                   {
                     (
                       <ListItem button>
-                        <ListItemText key={index}>
+                        <ListItemText >
                           {convo.userTwo.Name}
                         </ListItemText>
                       </ListItem>
@@ -183,24 +236,62 @@ const Messages = () => {
             )}
           </div>
         </div>
-        <div className={classes.flex}>
-          <TextField
-            className={classes.chatBox}
-            id="outlined-required"
-            label="Type here!"
-            value={textValue}
-            onChange={e => setTextValue(e.target.value)}
-            variant="outlined"
-          />
 
-          <Button
-            variant="contained"
-            color="primary"
-          >
-            Send
-          </Button>
-        </div>
 
+
+
+
+      <div>
+          {message.map((messageData) => {
+            return (
+              <List>
+                <ListItem alignItems="flex-start" >
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="Avatar"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText >
+                  {messageData.text}
+                  {messageData.date}
+                  </ListItemText>
+                </ListItem>
+              </List>
+            )
+          }
+          )}
+      </div>
+
+
+
+
+        <Grid item xs={12} className={classes.inputRow}>
+          <form onSubmit={createMessage} className={classes.form}>
+            <Grid
+              container
+              className={classes.newMessageRow}
+              alignItems="flex-end"
+            >
+              <Grid item xs={11}>
+                <TextField
+                  id="message"
+                  label="Send a Message"
+                  variant="outlined"
+                  margin="dense"
+                  fullWidth
+                  input="text"
+                  value={newMessage}
+                  onChange={(e) => setnewMessage(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={1}>
+                <Button type="submit" color="primary" variant="contained">
+                  Send
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </Grid>
       </Paper>
     </div>
   )
