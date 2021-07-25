@@ -152,13 +152,14 @@ const Messages = () => {
         CREATE_MESSAGE_URL,
         {
           sender: user._id,
-          text: message,
+          text: newMessage,
           date: Date.now
         },
         config
-      ).then((message) => {
-        console.log(message)
-        setMessage(message => [...message, message.data])
+      ).then((receivedMessage) => {
+        console.log(receivedMessage)
+        setMessage([...message, receivedMessage.data])
+        setnewMessage("")
         
       });
     } catch (err) {
@@ -239,9 +240,9 @@ const Messages = () => {
 
 
 
-{/* 
+
       <div>
-          {message.map((messageData, index) => {
+          {message.map((messageData) => {
             return (
               <List>
                 <ListItem alignItems="flex-start" >
@@ -252,13 +253,14 @@ const Messages = () => {
                   </ListItemAvatar>
                   <ListItemText >
                   {messageData.text}
+                  {messageData.date}
                   </ListItemText>
                 </ListItem>
               </List>
             )
           }
           )}
-      </div> */}
+      </div>
 
 
 
@@ -278,8 +280,8 @@ const Messages = () => {
                   margin="dense"
                   fullWidth
                   input="text"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  value={newMessage}
+                  onChange={(e) => setnewMessage(e.target.value)}
                 />
               </Grid>
               <Grid item xs={1}>
