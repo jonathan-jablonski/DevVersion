@@ -8,6 +8,7 @@ const http = require("http").createServer(app);
 const passport = require('passport');
 
 const PORT = process.env.PORT || 3001;
+const PORT2 = process.env.socket || 3002;
 const morgan = require("morgan");
 const io = require('socket.io')(http);
 
@@ -74,6 +75,10 @@ io.on('connection', function(socket) {
   })
 })
 
-http.listen(PORT, () => {
+http.listen(PORT2, () => {
+  console.log(`Server is running under port ${PORT2} ...`);
+});
+
+app.listen(PORT, () => {
   console.log(`Server is running under port ${PORT} ...`);
 });

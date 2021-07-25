@@ -25,7 +25,7 @@ const Routing = () => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     console.log("USER: ", user);
-    if (user) {
+    if (user && !!user) {
       dispatch({ type: "USER", payload: user });
     } else {
       if (!history.location.pathname.startsWith("/reset"))

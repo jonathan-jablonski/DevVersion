@@ -120,9 +120,13 @@ const Home = () => {
 
 	useEffect(() => {
 		console.log(config);
-		axios.get(ALL_POST_URL, config).then((res) => {
-			setData(res.data.posts);
-		});
+		if (localStorage.getItem("user") && !!localStorage.getItem("user")) {
+			const user = JSON.parse(localStorage.getItem("user"));
+			axios.get(ALL_POST_URL, config).then((res) => {
+				setData(res.data.posts);
+		console.log("USER: ", user)
+			});
+		}
 	}, []);
 
 	const likePost = (id) => {
