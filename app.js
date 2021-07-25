@@ -8,7 +8,7 @@ const http = require("http").createServer(app);
 const passport = require('passport');
 
 const PORT = process.env.PORT || 3001;
-const PORT2 = process.env.socket || 3002;
+const PORT2 = process.env.PORT2 || 3002;
 const morgan = require("morgan");
 const io = require('socket.io')(http);
 
@@ -75,7 +75,7 @@ io.on('connection', function(socket) {
     console.log('User Disconnected');
   });
   socket.on('send message', body => {
-    console.log('message: ' + body) 
+    console.log('message: ', body) 
   })
 })
 

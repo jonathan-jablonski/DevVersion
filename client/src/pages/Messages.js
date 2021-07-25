@@ -10,7 +10,7 @@ import { IconButton, TextField, Link, Divider, ListItemAvatar, Avatar } from '@m
 import { List, ListItem, ListItemText, Grid, Button } from '@material-ui/core';
 
 
-const socket = io.connect("http://localhost:3000");
+const socket = io.connect("ws://localhost:3002");
 
 //Styles the classes
 const useStyles = makeStyles(theme => ({
@@ -124,7 +124,7 @@ const Messages = () => {
         convo.userTwo._id === userTwo._id
       )
       console.log(foundConvo)
-      if (foundConvo.length != 0) {
+      if (foundConvo.length !== 0) {
         return;
       }
       await axios.post(
@@ -147,6 +147,7 @@ const Messages = () => {
 
   const createMessage = async (e) => {
     e.preventDefault();
+   
     try {
       await axios.post(
         CREATE_MESSAGE_URL,
@@ -160,6 +161,10 @@ const Messages = () => {
         console.log(receivedMessage)
         setMessage([...message, receivedMessage.data])
         setnewMessage("")
+        socket.emit('send message', {
+          senderId: user._id,
+          text: newMessage
+        })
         
       });
     } catch (err) {
@@ -224,7 +229,7 @@ const Messages = () => {
                   {
                     (
                       <ListItem button>
-                        <ListItemText >
+                        <ListItemText key={index}>
                           {convo.userTwo.Name}
                         </ListItemText>
                       </ListItem>
@@ -253,7 +258,6 @@ const Messages = () => {
                   </ListItemAvatar>
                   <ListItemText >
                   {messageData.text}
-                  {messageData.date}
                   </ListItemText>
                 </ListItem>
               </List>
