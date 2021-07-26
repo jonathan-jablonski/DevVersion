@@ -5,12 +5,12 @@ import { CREATE_CONVERSATION_URL, config, CREATE_MESSAGE_URL } from '../config/c
 import io from "socket.io-client";
 
 // Material UI styling
-import { makeStyles, Paper, Typography, } from '@material-ui/core';
-import { IconButton, TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
+import { makeStyles, Paper } from '@material-ui/core';
+import { TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
 import { List, ListItem, ListItemText, Grid, Button } from '@material-ui/core';
 
 
-const socket = io.connect("ws://localhost:3002");
+
 
 //Styles the classes
 const useStyles = makeStyles(theme => ({
@@ -32,16 +32,13 @@ const useStyles = makeStyles(theme => ({
     height: '600px'
   },
   chatBox: {
-    width: '85%'
+    width: '85%',
   },
   button: {
     width: '15%'
   },
   search: {
     width: '20%'
-  },
-  messageBox: {
-    display: 'flex'
   },
   topicTitle: {
     right: '20px',
@@ -62,7 +59,7 @@ const Messages = () => {
   //Consts
   const classes = useStyles();
   const { user } = useContext(CTX);
-
+  const socket = useRef();
 
   //States
   const [searchUsers, setSearchUsers] = useState([]);
@@ -71,6 +68,15 @@ const Messages = () => {
   const [newMessage, setnewMessage] = React.useState("")
 
 
+//Pushes message from the array and uses socket io to emit  the message to all other clients
+  useEffect(() => {
+    socket.current = io("ws://devver.herokuapp.com/messages")
+    socket.current.on('push', (data) => {
+      console.log('Client side data', data);
+      setMessage(message => [...message, data])
+    });
+  }, []);
+
 
   // Get messages
   useEffect(() => {
@@ -78,8 +84,6 @@ const Messages = () => {
       try {
         const res = await axios.get(CREATE_MESSAGE_URL, config)
         setMessage(res.data)
-        socket.emit('send message', {})
-        console.log('Message res', res)
       } catch (err) {
         console.log(err)
       }
@@ -93,7 +97,6 @@ const Messages = () => {
       try {
         const res = await axios.get(CREATE_CONVERSATION_URL, config)
         setActiveConvos(res.data)
-        console.log('Conversations', res)
       } catch (err) {
         console.log(err)
       }
@@ -125,7 +128,7 @@ const Messages = () => {
         convo.userTwo._id === userTwo._id
       )
       console.log(foundConvo)
-      if (foundConvo.length != 0) {
+      if (foundConvo.length !== 0) {
         return;
       }
       await axios.post(
@@ -145,9 +148,14 @@ const Messages = () => {
     }
   };
 
-
+  // Creates message in the db
   const createMessage = async (e) => {
     e.preventDefault();
+    socket.current.emit('send message', {
+      sender: socket.id,
+      text: newMessage
+    })
+
     try {
       await axios.post(
         CREATE_MESSAGE_URL,
@@ -158,10 +166,9 @@ const Messages = () => {
         },
         config
       ).then((receivedMessage) => {
-        console.log(receivedMessage)
         setMessage([...message, receivedMessage.data])
         setnewMessage("")
-        
+
       });
     } catch (err) {
       console.log('this is the error', err)
@@ -171,9 +178,12 @@ const Messages = () => {
 
 
 
+
+
   return (
     <div>
       <Paper className={classes.root}>
+        {/* Renders the search when looking for someone */}
         <div component="form" className={classes.search}>
           <TextField
             className={classes.searchbox}
@@ -185,7 +195,6 @@ const Messages = () => {
             inputProps={{ "aria-label": "search" }}
             onChange={(e) => FindUser(e.target.value)}
           />
-
         </div>
         <div>
           <List className={classes.root}>
@@ -215,7 +224,7 @@ const Messages = () => {
               })
               : null}
           </List>
-
+          {/* Returns Conversation array when clicked in search*/}
         </div>
         <div className={classes.flex}>
           <div className={classes.topicsWindow}>
@@ -225,7 +234,7 @@ const Messages = () => {
                   {
                     (
                       <ListItem button>
-                        <ListItemText >
+                        <ListItemText key={index}>
                           {convo.userTwo.Name}
                         </ListItemText>
                       </ListItem>
@@ -236,36 +245,33 @@ const Messages = () => {
             }
             )}
           </div>
+
+
+          {/* Returns message array */}
+          <div className={classes.flex}>
+            <div className={classes.chatBox}>
+              {message.map((messageData) => {
+                return (
+                  <List>
+                      <ListItem alignItems="flex-start" >
+                        <ListItemAvatar>
+                          <Avatar
+                            alt="Avatar"
+                          />
+                        </ListItemAvatar>
+                        <ListItemText >
+                          {messageData.text}
+                        </ListItemText>
+                      </ListItem>
+                  </List>
+                )
+              }
+              )}
+            </div>
+          </div>
         </div>
 
-
-
-
-
-      <div>
-          {message.map((messageData) => {
-            return (
-              <List>
-                <ListItem alignItems="flex-start" >
-                  <ListItemAvatar>
-                    <Avatar
-                      alt="Avatar"
-                    />
-                  </ListItemAvatar>
-                  <ListItemText >
-                  {messageData.text}
-                  {messageData.date}
-                  </ListItemText>
-                </ListItem>
-              </List>
-            )
-          }
-          )}
-      </div>
-
-
-
-
+        {/* Creates the text message box and send button and functionally of creating the message when it send button is clicked */}
         <Grid item xs={12} className={classes.inputRow}>
           <form onSubmit={createMessage} className={classes.form}>
             <Grid
