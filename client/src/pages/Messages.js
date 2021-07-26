@@ -10,7 +10,7 @@ import { TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/c
 import { List, ListItem, ListItemText, Grid, Button } from '@material-ui/core';
 
 
-const socket = io.connect("ws://localhost:3002");
+
 
 //Styles the classes
 const useStyles = makeStyles(theme => ({
@@ -32,16 +32,13 @@ const useStyles = makeStyles(theme => ({
     height: '600px'
   },
   chatBox: {
-    width: '85%'
+    width: '85%',
   },
   button: {
     width: '15%'
   },
   search: {
     width: '20%'
-  },
-  messageBox: {
-    display: 'flex'
   },
   topicTitle: {
     right: '20px',
@@ -62,15 +59,23 @@ const Messages = () => {
   //Consts
   const classes = useStyles();
   const { user } = useContext(CTX);
-
+  const socket = useRef();
 
   //States
   const [searchUsers, setSearchUsers] = useState([]);
   const [activeConvos, setActiveConvos] = React.useState([])
   const [message, setMessage] = React.useState([]);
   const [newMessage, setnewMessage] = React.useState("")
-  const [response, setResponse] = useState("");
 
+
+//Pushes message from the array and uses socket io to emit  the message to all other clients
+  useEffect(() => {
+    socket.current = io("ws://localhost:3002");
+    socket.current.on('push', (data) => {
+      console.log('Client side data', data);
+      setMessage(message => [...message, data])
+    });
+  }, []);
 
 
   // Get messages
@@ -146,10 +151,10 @@ const Messages = () => {
   // Creates message in the db
   const createMessage = async (e) => {
     e.preventDefault();
-  socket.emit('send message', {
-          sender: socket.id,
-          text: newMessage
-        })
+    socket.current.emit('send message', {
+      sender: socket.id,
+      text: newMessage
+    })
 
     try {
       await axios.post(
@@ -163,7 +168,7 @@ const Messages = () => {
       ).then((receivedMessage) => {
         setMessage([...message, receivedMessage.data])
         setnewMessage("")
-      
+
       });
     } catch (err) {
       console.log('this is the error', err)
@@ -171,12 +176,7 @@ const Messages = () => {
     }
   };
 
-  useEffect(() => {
-    socket.on('push', (data) => {
-      console.log('Client side data', data); // world
-      setResponse(data)
-    });
-  }, []);
+
 
 
 
@@ -245,27 +245,30 @@ const Messages = () => {
             }
             )}
           </div>
-        </div>
 
-        {/* Returns message array */}
-        <div>
-          {message.map((messageData) => {
-            return (
-              <List>
-                <ListItem alignItems="flex-start" >
-                  <ListItemAvatar>
-                    <Avatar
-                      alt="Avatar"
-                    />
-                  </ListItemAvatar>
-                  <ListItemText >
-                    {messageData.text}
-                  </ListItemText>
-                </ListItem>
-              </List>
-            )
-          }
-          )}
+
+          {/* Returns message array */}
+          <div className={classes.flex}>
+            <div className={classes.chatBox}>
+              {message.map((messageData) => {
+                return (
+                  <List>
+                      <ListItem alignItems="flex-start" >
+                        <ListItemAvatar>
+                          <Avatar
+                            alt="Avatar"
+                          />
+                        </ListItemAvatar>
+                        <ListItemText >
+                          {messageData.text}
+                        </ListItemText>
+                      </ListItem>
+                  </List>
+                )
+              }
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Creates the text message box and send button and functionally of creating the message when it send button is clicked */}
