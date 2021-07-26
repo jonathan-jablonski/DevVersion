@@ -79,11 +79,6 @@ const Messages = () => {
       try {
         const res = await axios.get(CREATE_MESSAGE_URL, config)
         setMessage(res.data)
-<<<<<<< HEAD
-=======
-        socket.emit('send message', {})
-        console.log('Message res', res)
->>>>>>> main
       } catch (err) {
         console.log(err)
       }
@@ -104,13 +99,6 @@ const Messages = () => {
     getConvo();
   }, []);
 
-
-  useEffect(() => {
-    socket.on('push', (data) => {
-      console.log('Client side data', data); // world
-      setResponse(data)
-    });
-  }, []);
 
 
   // Allows users to find profiles
@@ -183,7 +171,12 @@ const Messages = () => {
     }
   };
 
- 
+  useEffect(() => {
+    socket.on('push', (data) => {
+      console.log('Client side data', data); // world
+      setResponse(data)
+    });
+  }, []);
 
 
 
