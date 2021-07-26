@@ -5,8 +5,8 @@ import { CREATE_CONVERSATION_URL, config, CREATE_MESSAGE_URL } from '../config/c
 import io from "socket.io-client";
 
 // Material UI styling
-import { makeStyles, Paper, Typography, } from '@material-ui/core';
-import { IconButton, TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
+import { makeStyles, Paper } from '@material-ui/core';
+import { TextField, Link, Divider, ListItemAvatar, Avatar } from '@material-ui/core';
 import { List, ListItem, ListItemText, Grid, Button } from '@material-ui/core';
 
 
@@ -69,6 +69,7 @@ const Messages = () => {
   const [activeConvos, setActiveConvos] = React.useState([])
   const [message, setMessage] = React.useState([]);
   const [newMessage, setnewMessage] = React.useState("")
+  const [response, setResponse] = useState("");
 
 
 
@@ -78,8 +79,6 @@ const Messages = () => {
       try {
         const res = await axios.get(CREATE_MESSAGE_URL, config)
         setMessage(res.data)
-        socket.emit('send message', {})
-        console.log('Message res', res)
       } catch (err) {
         console.log(err)
       }
@@ -93,7 +92,6 @@ const Messages = () => {
       try {
         const res = await axios.get(CREATE_CONVERSATION_URL, config)
         setActiveConvos(res.data)
-        console.log('Conversations', res)
       } catch (err) {
         console.log(err)
       }
@@ -125,7 +123,7 @@ const Messages = () => {
         convo.userTwo._id === userTwo._id
       )
       console.log(foundConvo)
-      if (foundConvo.length != 0) {
+      if (foundConvo.length !== 0) {
         return;
       }
       await axios.post(
@@ -145,9 +143,14 @@ const Messages = () => {
     }
   };
 
-
+  // Creates message in the db
   const createMessage = async (e) => {
     e.preventDefault();
+  socket.emit('send message', {
+          sender: socket.id,
+          text: newMessage
+        })
+
     try {
       await axios.post(
         CREATE_MESSAGE_URL,
@@ -158,10 +161,9 @@ const Messages = () => {
         },
         config
       ).then((receivedMessage) => {
-        console.log(receivedMessage)
         setMessage([...message, receivedMessage.data])
         setnewMessage("")
-        
+      
       });
     } catch (err) {
       console.log('this is the error', err)
@@ -169,11 +171,19 @@ const Messages = () => {
     }
   };
 
+  useEffect(() => {
+    socket.on('push', (data) => {
+      console.log('Client side data', data); // world
+      setResponse(data)
+    });
+  }, []);
+
 
 
   return (
     <div>
       <Paper className={classes.root}>
+        {/* Renders the search when looking for someone */}
         <div component="form" className={classes.search}>
           <TextField
             className={classes.searchbox}
@@ -185,7 +195,6 @@ const Messages = () => {
             inputProps={{ "aria-label": "search" }}
             onChange={(e) => FindUser(e.target.value)}
           />
-
         </div>
         <div>
           <List className={classes.root}>
@@ -215,7 +224,7 @@ const Messages = () => {
               })
               : null}
           </List>
-
+          {/* Returns Conversation array when clicked in search*/}
         </div>
         <div className={classes.flex}>
           <div className={classes.topicsWindow}>
@@ -225,7 +234,7 @@ const Messages = () => {
                   {
                     (
                       <ListItem button>
-                        <ListItemText >
+                        <ListItemText key={index}>
                           {convo.userTwo.Name}
                         </ListItemText>
                       </ListItem>
@@ -238,11 +247,8 @@ const Messages = () => {
           </div>
         </div>
 
-
-
-
-
-      <div>
+        {/* Returns message array */}
+        <div>
           {message.map((messageData) => {
             return (
               <List>
@@ -253,19 +259,16 @@ const Messages = () => {
                     />
                   </ListItemAvatar>
                   <ListItemText >
-                  {messageData.text}
-                  {messageData.date}
+                    {messageData.text}
                   </ListItemText>
                 </ListItem>
               </List>
             )
           }
           )}
-      </div>
+        </div>
 
-
-
-
+        {/* Creates the text message box and send button and functionally of creating the message when it send button is clicked */}
         <Grid item xs={12} className={classes.inputRow}>
           <form onSubmit={createMessage} className={classes.form}>
             <Grid
