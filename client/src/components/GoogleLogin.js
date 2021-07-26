@@ -3,7 +3,7 @@ import React from 'react';
 
 import { GoogleLogin } from 'react-google-login';
 // refresh token
-import { refreshTokenSetup } from '../utils/refreshToken';
+// import { refreshTokenSetup } from '../utils/refreshToken';
 
 const clientId =
   '746742004572-doda3p06e7aqdsuiqff4lguet9ug8aiu.apps.googleusercontent.com';
@@ -14,7 +14,7 @@ function Login() {
     alert(
       `Logged in successfully welcome ${res.profileObj.name} 😍. \n See console for full profile object.`
     );
-    refreshTokenSetup(res);
+    // refreshTokenSetup(res);
   };
 
   const onFailure = (res) => {
@@ -39,4 +39,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default GoogleLogin;

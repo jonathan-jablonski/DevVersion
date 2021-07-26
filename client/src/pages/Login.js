@@ -1,30 +1,28 @@
-import React, { useState, useContext } from "react";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { UserContext } from "../App";
-import { LOGIN_URL } from "../config/constants";
-import Copyright from "../components/Copyight";
-import axios from "axios";
+import Box from "@material-ui/core/Box";
 // Material-UI Components
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import Alert from "@material-ui/lab/Alert";
+import axios from "axios";
+import React, { useContext, useState } from "react";
 import { GoogleLogin } from "react-google-login";
-import GoogleButton from "react-google-button";
+import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "../App";
+import Copyright from "../components/Copyight";
+import { LOGIN_URL } from "../config/constants";
 
-const clientId =
-  "746742004572-o016idimfp27hv64fi9l452nh98lk711.apps.googleusercontent.com";
+// const clientId =
+//   "746742004572-o016idimfp27hv64fi9l452nh98lk711.apps.googleusercontent.com";
 // General Styles
 const useStyles = makeStyles((theme) => ({
   marginTop: "50px",
-
   Logo: {
     fontFamily: "Modesto, text",
     margin: "40px 0px",
@@ -61,7 +59,33 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [formatValidation, setFormatValidation] = useState(false);
   const [authValidation, setAuthValidation] = useState(false);
+  const clientId =
+    "746742004572-o016idimfp27hv64fi9l452nh98lk711.apps.googleusercontent.com";
 
+  const clientSecret = "dGX0jows4ngS8X-ZnHR9I_LH";
+    const onSuccess = (res) => {
+      axios.get(`/api/user/${res.profileObj.email}`).then((res) => {
+        console.log("Login Success: currentUser:", res.profileObj);
+        // alert(
+        //   Logged in successfully welcome ${res.profileObj.name} :heart_eyes:. \n See console for full profile object.
+        // );
+        console.log(res);
+        console.log("Login Success: currentUser:", res.profileObj);
+        alert(
+          `Logged in successfully welcome ${res.profileObj.name} :heart_eyes:. \n See console for full profile object.`
+        );
+        console.log(res);
+        // getUserByEmail
+        // if email doesnt exist, create
+        //refreshTokenSetup(res);
+        //refreshTokenSetup(res);
+      });
+  };
+
+  const onFailure = (res) => {
+    console.log("Login failed: res:", res);
+    alert(`Failed to login. 😢 `);
+  };
   const PostData = () => {
     // the Regex email validation was taken from : https://emailregex.com/
     if (
@@ -72,6 +96,7 @@ const Login = () => {
       axios
         .post(LOGIN_URL, { password, email })
         .then((res) => {
+          console.log(res);
           const data = res.data;
           if (data.error) {
             setFormatValidation(false);
@@ -85,7 +110,7 @@ const Login = () => {
             //we can show that success PopUp or not depends on dev choice
             //
             // we redirect the user to home page
-            console.log(data.user)
+            console.log(data.user);
             history.push("/");
           }
         })
@@ -170,20 +195,15 @@ const Login = () => {
               >
                 Sign In
               </Button>
-           <GoogleLogin
-                clientId="746742004572-o016idimfp27hv64fi9l452nh98lk711.apps.googleusercontent.com"
-                render={(renderProps) => (
-                  <GoogleButton
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                    className="login__button"
-                    
-                  >
-                  </GoogleButton>
-                )}
-                style={{ marginTop: '80px' }}
-                isSignedIn={true}
-                cookiePolicy={"single_host_origin"}
+              <GoogleLogin
+                clientId={clientId}
+                clientSecret={clientSecret}
+                buttonText="Google Login"
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                // cookiePolicy={"single_host_origin"}
+                style={{ marginTop: "100px" }}
+                // isSignedIn={true}
               />
 
               <Grid container>

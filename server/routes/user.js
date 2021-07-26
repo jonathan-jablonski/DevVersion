@@ -37,6 +37,10 @@ router.get("/user/:id", loginmiddleware, (req, res) => {
 		});
 });
 
+router.get("/user/:email", loginmiddleware, (req, res) => {
+  User.findOne({ email: req.params.email })
+});
+
 router.put("/follow", loginmiddleware, (req, res) => {
 	User.findByIdAndUpdate(
 		req.body.followId,

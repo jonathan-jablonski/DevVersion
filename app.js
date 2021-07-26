@@ -38,6 +38,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
  done(null, user);
 });
+
 app.use(passport.initialize()); 
 app.use(passport.session(
   console.log('PASSPORT IS IN!!!!!!!!')

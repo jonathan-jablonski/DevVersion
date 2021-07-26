@@ -191,7 +191,7 @@ passport.use(
   {
    clientID: GOOGLE_CLIENT_ID,
    clientSecret: GOOGLE_CLIENT_SECRET,
-   callbackURL: "http://localhost:3000/auth/google/redirect" || "https://devver.herokuapp.com/auth/google/redirect"
+   callbackURL: "http://localhost:3001/auth/google/redirect" || "https://devver.herokuapp.com/auth/google/redirect"
   },
   function(accessToken, refreshToken, profile, done) {
     let userData = {
@@ -206,12 +206,43 @@ passport.use(
 );
 
 router.get(
-    "/auth/google/callback",
+    "/auth/google/redirect",
     passport.authenticate("google", { failureRedirect: "/", session: false }),
     function(req, res) {
         const googleToken = req.user.token;
-        res.redirect("http://localhost:3000/");
+        res.redirect("http://localhost:3001/");
     }
 );
+
+
+router.post('/checkUser', (req, res) => {
+  User.findOne({ Email: req.body.Email })
+  .then((user) => {
+    if (!user) {
+        User.create({Email: req.body.Email, name: req.body.Name, Password: 'lol'}).then((e) => res.json)
+    } else {
+      bcrypt.compare(password, savedUser.Password).then((doMatch) => {
+        console.log("COMPARE");
+        if (doMatch) {
+          console.log("DO MATCH");
+          // we will generate the token based on the ID of user
+          const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
+          // retrieve the user info details and send it to the front
+          const { _id, Name, Email, Followers, Following, Bookmarks } =
+            savedUser;
+          res.json({
+            token,
+            user: { _id, Name, Email, Followers, Following, Bookmarks },
+          });
+        } else {
+          console.log("INVALID EMAIL/PASSWORD");
+          return res.json({
+            error: "Invalid Email or Password",
+          });
+        }
+        console.log("END OF COMPARE");
+      });
+    }});
+  });
 
 module.exports = router;

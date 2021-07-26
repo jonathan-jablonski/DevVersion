@@ -4,7 +4,7 @@ import { reducer, initialState } from "./reducers/userReducer";
 import Store from "./pages/Store";
 import NavBar from "./components/Navbar";
 import Home from "./pages/Home";
-import GoogleLogin from "./pages/GoogleLogin";
+import GoogleLogin from "./components/GoogleLogin"
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CreatePost from "./pages/CreatePost.js";
@@ -64,7 +64,7 @@ const Routing = () => {
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/auth/google/">
+      <Route path="/auth/google">
         <GoogleLogin />
       </Route>
       <Route path="/signup">
