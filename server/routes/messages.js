@@ -22,7 +22,6 @@ router.get("/messages", loginMiddleware, async (req, res) => {
         const messages = await Messages.find({
             sender: req.user._id
         })
-        console.log('This is req.body', req.body)
         res.status(200).json(messages)
     } catch (err) {
         res.status(500).json(err)

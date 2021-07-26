@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router();
 const Conversations = require("../models/conversations");
-const messages = require('../models/messages');
 const loginMiddleware = require("../middleware/loginMiddleware.js");
+
 
 
 router.post("/conversations", loginMiddleware, async (req, res) => {

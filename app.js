@@ -68,15 +68,23 @@ mongoose.connection.on("error", (err) => {
   console.log("error while connecting to DevVersionDB : ", err);
 });
 
-io.on('connection', function(socket) {
+io.on('connection', (socket) => {
   const { id } = socket.client;
+  
+  
   console.log(`User connected: ${id}`);
+
+
   socket.on('disconnect', function(){
     console.log('User Disconnected');
   });
-  socket.on('send message', body => {
-    console.log('message: ', body) 
+
+
+  socket.on('send message', (data) => {
+    console.log('socket backend: ', data)
+    socket.broadcast.emit('push', data) 
   })
+
 })
 
 http.listen(PORT2, () => {
