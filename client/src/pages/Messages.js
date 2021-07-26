@@ -70,7 +70,7 @@ const Messages = () => {
 
 //Pushes message from the array and uses socket io to emit  the message to all other clients
   useEffect(() => {
-    socket.current = io("ws://devver.herokuapp.com/messages")
+    socket.current = io("ws://localhost:3002");
     socket.current.on('push', (data) => {
       console.log('Client side data', data);
       setMessage(message => [...message, data])
