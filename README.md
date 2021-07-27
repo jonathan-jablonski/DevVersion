@@ -13,7 +13,6 @@
 
 ## Summary 
  * Collaborators: Cigi Tipton, Jonathan Jablonski and Vincent Vo
- * 
  ![Screenshot](client/src/assets/user.png?raw=true ) 
 ---
 
@@ -61,6 +60,6 @@
 
 ---
 
-![Screenshot](client/src/assets/devvers.png.png?raw=true ) 
+![Screenshot](client/src/assets/devvers.png?raw=true ) 
 
 [Back To Top](#devversion)
