@@ -1,4 +1,4 @@
-![Screenshot](assets/images/Dev4brackets.png?raw=true ) 
+![Screenshot](client/src/assets/devwithus.png?raw=true ) 
 
 
 ---
@@ -12,7 +12,9 @@
 ---
 
 ## Summary 
- ![Screenshot](src/userassets/images/user.png?raw=true ) 
+ * Collaborators: Cigi Tipton, Jonathan Jablonski and Vincent Vo
+ * 
+ ![Screenshot](client/src/assets/user.png?raw=true ) 
 ---
 
 ## Technologies
@@ -40,7 +42,6 @@
   * Git
   * Heroku (Heroku build)
 ---
-![Screenshot](assets/images/login.png?raw=true ) 
 ## Challenges
 
 * Optimization 3rd Party Logins
@@ -60,6 +61,6 @@
 
 ---
 
+![Screenshot](client/src/assets/devvers.png.png?raw=true ) 
 
-
-[Back To Top](#podshack)
+[Back To Top](#devversion)
