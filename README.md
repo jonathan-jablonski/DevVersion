@@ -1,4 +1,4 @@
-![Screenshot](assets/images/hero.png?raw=true ) 
+![Screenshot](assets/images/Dev4brackets.png?raw=true ) 
 
 
 ---
@@ -8,7 +8,7 @@
   * [Technologies](#technologies)
   * [Challenges](#challenges)
   * [Future Development](#future-development)
-  * [Click here to visit the site!](https://podshack.herokuapp.com/)
+  * [Click here to visit the site!](https://devver.herokuapp.com/)
 ---
 
 ## Summary 
